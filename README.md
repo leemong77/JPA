@@ -1,2 +1,2 @@
-# myBook
-read books summary
+# JPA
+클로드 센세
