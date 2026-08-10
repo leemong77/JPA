@@ -1,6 +1,8 @@
 package com.play.jpa.entity;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "member")
@@ -40,4 +42,19 @@ public class Member {
                 team.getMembers().add(this);  // 반대쪽 컬렉션도 같이 맞춰줌
         }
     }
+    
+    // Hobby 쪽의 "member" 필드가 주인
+    @OneToMany(mappedBy = "member")
+    private List<Hobby> hobbies = new ArrayList<>();
+    
+    public List<Hobby> getHobbies() { return hobbies; }
+    public void setHobbies(List<Hobby> hobbies) { this.hobbies = hobbies; }
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender")
+    private Gender gender;
+
+    // getter/setter 추가
+    public Gender getGender() { return gender; }
+    public void setGender(Gender gender) { this.gender = gender; }
 }
