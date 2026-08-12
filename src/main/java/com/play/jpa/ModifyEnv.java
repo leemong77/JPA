@@ -79,4 +79,16 @@ public class ModifyEnv {
             return null;
         }
     }
+    
+    //Member 이름으로 조회(내부 헬퍼 메소드)
+    public Member findMemberByName(String memberName){
+        try {
+            TypedQuery<Member> query = em.createQuery(
+                    "SELECT m FROM Member m WHERE m.name = :name", Member.class);
+            query.setParameter("name", memberName);
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }

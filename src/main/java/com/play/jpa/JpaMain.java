@@ -19,6 +19,7 @@ public class JpaMain {
         try {
             tx.begin();
 
+            /* 
             // 1. 기존 데이터 초기화 (Hobby -> Member -> Team)
             InitEnv initEnv = new InitEnv(em);
             initEnv.initAll();
@@ -36,6 +37,14 @@ public class JpaMain {
             createEnv.CreateHobby("등산", member1);
             createEnv.CreateHobby("영화감상", member2);
 
+            */
+            
+            ModifyEnv Mtool = new ModifyEnv(em);
+            
+            Member member = Mtool.findMemberByName("홍길동");
+            
+            Mtool.showMember(member);
+            
             tx.commit();
             System.out.println("전체 트랜잭션 커밋 완료");
 
