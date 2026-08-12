@@ -6,3 +6,4 @@ build/
 nbbuild/
 nbdist/
 .nb-gradle/
+/nbproject/

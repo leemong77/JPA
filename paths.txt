@@ -1,2 +1,2 @@
-src/main/java/com/play/jpa/entity/Address.java
-src/main/java/com/play/jpa/entity/Order.java
+src/main/java/com/play/jpa/manage/TeamManager.java
+src/test/java/com/play/jpa/manage/TeamManagerTest.java   ← 여기
