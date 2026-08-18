@@ -18,7 +18,7 @@ class TeamManagerTest {
     
     private static EntityManagerFactory emf;
     private EntityManager em;
-    //private TeamManager teamManager;
+    private TeamManager tm;
 
     @BeforeAll
     static void setUpFactory() {
