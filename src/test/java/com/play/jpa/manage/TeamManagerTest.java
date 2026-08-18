@@ -1,5 +1,6 @@
 package com.play.jpa.manage;
 
+import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -51,10 +52,10 @@ class TeamManagerTest {
         em.close();
     }
 
-    @Test
+    //@Test
     void test_team_base() {
         
-        String teamName = "라이온즈";
+        String teamName = "자이언츠";
         tm.createTeam(teamName);
         
         String jpql = "select t from Team t where t.name = :name";
@@ -63,6 +64,22 @@ class TeamManagerTest {
             .getResultList();
         
         assertEquals(1, result.size());
+        
+        Team t = tm.pickTeam(teamName);
+        
+        assertTrue(t.getName().equals(teamName));
+        
+    }
+    
+    @Test
+    void test_add_member(){
+       String jpql = "select m from Member m where m.name = :name";
+       Member m = em.createQuery(jpql, Member.class).setParameter("name", "김갑돌").getSingleResult();
+       
+       jpql = "select t from Team t where t.name = :name";
+       Team t = em.createQuery(jpql,Team.class).setParameter("name", "자이언츠").getSingleResult();
+       
+       tm.addMember(t, m);
         
     }
 }

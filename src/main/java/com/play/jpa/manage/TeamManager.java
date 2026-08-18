@@ -1,5 +1,6 @@
 package com.play.jpa.manage;
 
+import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
 import jakarta.persistence.EntityManager;
 import java.util.List;
@@ -26,6 +27,21 @@ public class TeamManager {
 
             em.persist(t);
         }
+    }
+    
+    public Team pickTeam(String teamName){
+        String jpql = "select t from Team t where t.name = :name";
+        
+        Team team = em.createQuery(jpql, Team.class)
+                .setParameter("name", teamName)
+                .getSingleResult();
+                
+        return team;
+    }
+    
+    public void addMember(Team t,Member m){
+        m.setTeam(t);
+        em.persist(m);
     }
     
 }
