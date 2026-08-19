@@ -1,5 +1,6 @@
 package com.play.jpa.manage;
 
+import com.play.jpa.entity.Hobby;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
 import jakarta.persistence.EntityManager;
@@ -57,16 +58,32 @@ public class IntegratedVerification {
         assertEquals(listSize,totalCount);
     }
     
-    @Test
+    //@Test
     void test_member(){
         Team t = ep.pickTeam("라이온즈");
         
         Member m = new Member();
         m.setName("임홍국");
         
-        
         ep.addMember(t, m);
         
+    }
+    
+    @Test
+    void test_hobby(){
+        //hobby 등록
+        Hobby h = new Hobby();
+        h.setHobbyName("등산");
+        
+        ep.registerHobby(h);
+        
+    }
+    @Test
+    void test_addHobby(){
+        Hobby h = ep.pickHobby("낚시");
+        Member m = ep.pickMember("임홍국");
+        
+        ep.addHobby(m,h);
         
     }
 }

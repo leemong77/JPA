@@ -1,5 +1,7 @@
 package com.play.jpa.manage;
 
+import com.play.jpa.entity.Hobby;
+import com.play.jpa.entity.HobbyOfMember;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
 import jakarta.persistence.EntityManager;
@@ -90,5 +92,37 @@ public class EntityPlay {
                 .getSingleResult();
         
         return m;
+    }
+
+    void registerHobby(Hobby h) {
+        Hobby isH = pickHobby(h.getHobbyName());
+        
+        if(isH == null){
+            em.persist(h);
+        }
+    }
+
+    Hobby pickHobby(String hobbyName) {
+        String jpql = "select h from Hobby h where h.hobbyName = :name";
+        List<Hobby> isList = em.createQuery(jpql,Hobby.class)
+                .setParameter("name", hobbyName)
+                .getResultList();
+        
+        if(isList.isEmpty()){
+            return null;
+        }else{
+            return isList.get(0);
+        }
+        
+    }
+
+    void addHobby(Member m, Hobby h) {
+        HobbyOfMember hom = new HobbyOfMember();
+        
+        hom.setHobby(h);
+        hom.setMember(m);
+        
+        if(h!=null && m!= null)
+            em.persist(hom);
     }
 }
