@@ -1,6 +1,8 @@
 package com.play.jpa.entity;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "hobby")
@@ -8,32 +10,26 @@ public class Hobby {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "hobby_id")
+    private Long hobbyId;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "hobby_name", nullable = false)
+    private String hobbyName;
 
-    // 외래키(member_id)를 가지는 쪽 = 연관관계의 주인
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    // HobbyOfMember 쪽의 "hobby" 필드가 주인
+    @OneToMany(mappedBy = "hobby")
+    private List<HobbyOfMember> hobbyOfMembers = new ArrayList<>();
 
     public Hobby() {}
 
-    public Hobby(String name) {
-        this.name = name;
+    public Hobby(String hobbyName) {
+        this.hobbyName = hobbyName;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    public Member getMember() { return member; }
-    
-    public void setMember(Member member) {
-        this.member = member;
-        if (member != null) {
-            member.getHobbies().add(this);  // 연관관계 편의 메서드
-        }
-    }
+    public Long getHobbyId() { return hobbyId; }
+    public void setHobbyId(Long hobbyId) { this.hobbyId = hobbyId; }
+    public String getHobbyName() { return hobbyName; }
+    public void setHobbyName(String hobbyName) { this.hobbyName = hobbyName; }
+    public List<HobbyOfMember> getHobbyOfMembers() { return hobbyOfMembers; }
+    public void setHobbyOfMembers(List<HobbyOfMember> hobbyOfMembers) { this.hobbyOfMembers = hobbyOfMembers; }
 }
