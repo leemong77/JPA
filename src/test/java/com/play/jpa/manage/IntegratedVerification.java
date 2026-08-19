@@ -12,74 +12,61 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TeamManagerTest {
-
-    /*
-        mvn test -Dtest=com.play.jpa.manage.TeamManagerTest
-    */
-    
+// mvn test -Dtest=com.play.jpa.manage.IntegratedVerification
+public class IntegratedVerification {
     private static EntityManagerFactory emf;
     private EntityManager em;
     private EntityTransaction tx;
-    private TeamManager tm;
+    private EntityPlay ep;
+    //private TeamManager tm;
     
-
     @BeforeAll
     static void setUpFactory() {
         emf = Persistence.createEntityManagerFactory("myPU");
-        
     }
-
+    
     @AfterAll
     static void closeFactory() {
         emf.close();
         System.out.println("------------------>아 좋다!!");
         System.out.println("------------------>아 좋다!!");
     }
-
+    
     @BeforeEach
     void setUp() {
         em = emf.createEntityManager();
-        tm = new TeamManager(em);
         tx = em.getTransaction();
-        
         tx.begin();
+        ep = new EntityPlay(em);
     }
-
+    
     @AfterEach
     void tearDown() {
         tx.commit();
         em.close();
     }
-
-    //@Test
-    void test_team_base() {
+    
+    @Test
+    void test_team(){
+        int totalCount = ep.totalCount();
+        int listSize = ep.list().size();
         
-        String teamName = "자이언츠";
-        tm.createTeam(teamName);
+        System.out.println("totalCount:"+totalCount);
+        System.out.println("listSize:"+listSize);
         
-        String jpql = "select t from Team t where t.name = :name";
-        List<Team> result = em.createQuery(jpql, Team.class)
-            .setParameter("name", teamName)
-            .getResultList();
-        
-        assertEquals(1, result.size());
-        
-        Team t = tm.pickTeam(teamName);
-        
-        assertTrue(t.getName().equals(teamName));
-        
+        assertEquals(listSize,totalCount);
     }
     
     @Test
-    void test_add_member(){
-       String jpql = "select m from Member m where m.name = :name";
-       Member m = em.createQuery(jpql, Member.class).setParameter("name", "김갑돌").getSingleResult();
-       
-       jpql = "select t from Team t where t.name = :name";
-       Team t = em.createQuery(jpql,Team.class).setParameter("name", "자이언츠").getSingleResult();
-       
-       tm.addMember(t, m);
+    void test_member(){
+        Team t = ep.pickTeam("라이온즈");
+        
+        Member m = new Member();
+        m.setName("임홍국");
+        
+        
+        ep.addMember(t, m);
+        
         
     }
 }

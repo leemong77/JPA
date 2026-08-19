@@ -6,7 +6,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="member")
@@ -30,6 +33,13 @@ public class Member {
                 team.getMembers().add(this);  // 반대쪽 컬렉션도 같이 맞춰줌
         }
     }
+    
+    // HobbyOfMember 쪽의 "member" 필드가 주인
+    @OneToMany(mappedBy = "member")
+    private List<HobbyOfMember> hobbyOfMembers = new ArrayList<>();
+    
+    public List<HobbyOfMember> getHobbyOfMembers() { return hobbyOfMembers; }
+    public void setHobbyOfMembers(List<HobbyOfMember> hobbyOfMembers) { this.hobbyOfMembers = hobbyOfMembers; }
     
     
     //
