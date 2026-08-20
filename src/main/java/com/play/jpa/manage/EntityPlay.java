@@ -2,6 +2,7 @@ package com.play.jpa.manage;
 
 import com.play.jpa.entity.Hobby;
 import com.play.jpa.entity.HobbyOfMember;
+import com.play.jpa.entity.Job;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
 import jakarta.persistence.EntityManager;
@@ -94,10 +95,12 @@ public class EntityPlay {
         return m;
     }
 
-    void registerHobby(Hobby h) {
-        Hobby isH = pickHobby(h.getHobbyName());
+    void registerHobby(String hobbyName) {
+        Hobby isH = pickHobby(hobbyName);
         
         if(isH == null){
+            Hobby h = new Hobby();
+            h.setHobbyName(hobbyName);
             em.persist(h);
         }
     }
@@ -117,6 +120,11 @@ public class EntityPlay {
     }
 
     void addHobby(Member m, Hobby h) {
+        for(HobbyOfMember hom : m.getHobbyOfMembers()){
+            if(h.getHobbyId().intValue() == hom.getHobby().getHobbyId().intValue())
+                return;
+        }
+        
         HobbyOfMember hom = new HobbyOfMember();
         
         hom.setHobby(h);
@@ -125,4 +133,30 @@ public class EntityPlay {
         if(h!=null && m!= null)
             em.persist(hom);
     }
+
+    void registerJob(String jobName) {
+        Job cj = pickJob(jobName);
+        
+        if(cj == null){
+            Job j = new Job();
+            j.setName(jobName);
+
+            em.persist(j);
+        }
+    }
+
+    Job pickJob(String jobName) {
+        String jpql = "select j from Job j where j.name=:name";
+        
+        List<Job> jobs = em.createQuery(jpql,Job.class)
+                .setParameter("name", jobName)
+                .getResultList();
+        
+        if(jobs.isEmpty()){
+            return null;
+        }else{
+            return jobs.get(0);
+        }
+    }
+
 }

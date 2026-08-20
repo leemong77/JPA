@@ -16,7 +16,7 @@
             <!-- Hibernate -->
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <!-- 실행되는 SQL 로그 출력 -->
-            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="true"/>
         </properties>
     </persistence-unit>

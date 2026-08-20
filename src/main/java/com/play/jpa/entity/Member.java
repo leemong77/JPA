@@ -41,6 +41,16 @@ public class Member {
     public List<HobbyOfMember> getHobbyOfMembers() { return hobbyOfMembers; }
     public void setHobbyOfMembers(List<HobbyOfMember> hobbyOfMembers) { this.hobbyOfMembers = hobbyOfMembers; }
     
+    @OneToMany(mappedBy = "member")
+    private List<JobOfMember> jobList = new ArrayList<>();
+
+    public List<JobOfMember> getJobList() {
+        return jobList;
+    }
+
+    public void setJobList(List<JobOfMember> jobList) {
+        this.jobList = jobList;
+    }
     
     //
     public Long getId() {

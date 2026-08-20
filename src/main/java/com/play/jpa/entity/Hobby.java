@@ -31,5 +31,5 @@ public class Hobby {
     public String getHobbyName() { return hobbyName; }
     public void setHobbyName(String hobbyName) { this.hobbyName = hobbyName; }
     public List<HobbyOfMember> getHobbyOfMembers() { return hobbyOfMembers; }
-    public void setHobbyOfMembers(List<HobbyOfMember> hobbyOfMembers) { this.hobbyOfMembers = hobbyOfMembers; }
+    public void setHobbyOfMembers(List<HobbyOfMember> hobbyOfMembers) { this.hobbyOfMembers = hobbyOfMembers;}
 }
