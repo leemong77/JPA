@@ -36,6 +36,8 @@ public class JobOfMember {
     @JoinColumn(name = "job_id")
     private Job job;
     
+    public Job getJob() { return job; }
+    public void setJob(Job job) { this.job = job; }
 
     public Long getId() {
         return id;
@@ -45,7 +47,6 @@ public class JobOfMember {
         this.id = id;
     }
     
-    public Job getJob() { return job; }
-    public void setJob(Job job) { this.job = job; }
+    
 
 }

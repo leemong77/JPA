@@ -50,6 +50,11 @@ public class IntegratedVerification {
         em.close();
     }
     
+    /*
+    ======>   402:타이거즈
+    ======>   452:라이온즈
+    ======>   502:자이언츠
+    */
     @Test
     void test_team(){
         int totalCount = ep.totalCount();
@@ -59,11 +64,17 @@ public class IntegratedVerification {
         System.out.println("listSize:"+listSize);
         
         assertEquals(listSize,totalCount);
+        ep.showAllTeam();
+        
+        Team t = ep.pickTeam(502);
+        
+        ep.disassembling(t);
+        
     }
     
-    //@Test
+    @Test
     void test_member(){
-        Team t = ep.pickTeam("라이온즈");
+        Team t = ep.pickTeam(502);
         
         Member m = new Member();
         m.setName("임홍국");
@@ -93,7 +104,7 @@ public class IntegratedVerification {
         
     }
     
-    @Test
+    //@Test
     void test_job(){
         String[] jobNames = {"개발자","변호사","청소부","건설","수위","과일청과","백수"};
         

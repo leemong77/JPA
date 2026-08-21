@@ -32,11 +32,11 @@ public class EntityPlay {
         }
     }
     
-    public Team pickTeam(String teamName){
-        String jpql = "select t from Team t where t.name = :name";
+    public Team pickTeam(int id){
+        String jpql = "select t from Team t where t.id = :id";
         
         Team team = em.createQuery(jpql, Team.class)
-                .setParameter("name", teamName)
+                .setParameter("id", id)
                 .getSingleResult();
                 
         return team;
@@ -156,6 +156,27 @@ public class EntityPlay {
             return null;
         }else{
             return jobs.get(0);
+        }
+    }
+
+    void showAllTeam() {
+        String jpql = "select t from Team t";
+        List<Team> teamList = em.createQuery(jpql,Team.class)
+                .getResultList();
+        
+        for(Team t:teamList){
+            System.out.println("======>   "+t.getId()+":"+t.getName());
+        }
+        
+    }
+
+    void disassembling(Team t) {
+        System.out.printf("\n%s(%d)\n",t.getName(),t.getId().intValue());
+                
+        List<Member> members = t.getMembers();
+        
+        for(Member m:members){
+            System.out.printf("\tname:%s\n",m.getName());
         }
     }
 
