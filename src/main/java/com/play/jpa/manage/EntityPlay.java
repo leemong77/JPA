@@ -42,7 +42,7 @@ public class EntityPlay {
         return team;
     }
     
-    public void addMember(Team t,Member member){
+    public void toBeTeam(Team t,Member member){
         
         Member m = pickMember(member.getName());
         
@@ -95,7 +95,7 @@ public class EntityPlay {
         return m;
     }
 
-    void registerHobby(String hobbyName) {
+    public void registerHobby(String hobbyName) {
         Hobby isH = pickHobby(hobbyName);
         
         if(isH == null){
@@ -105,7 +105,7 @@ public class EntityPlay {
         }
     }
 
-    Hobby pickHobby(String hobbyName) {
+    public Hobby pickHobby(String hobbyName) {
         String jpql = "select h from Hobby h where h.hobbyName = :name";
         List<Hobby> isList = em.createQuery(jpql,Hobby.class)
                 .setParameter("name", hobbyName)
@@ -119,7 +119,7 @@ public class EntityPlay {
         
     }
 
-    void addHobby(Member m, Hobby h) {
+    public void addHobby(Member m, Hobby h) {
         for(HobbyOfMember hom : m.getHobbyOfMembers()){
             if(h.getHobbyId().intValue() == hom.getHobby().getHobbyId().intValue())
                 return;
@@ -134,7 +134,7 @@ public class EntityPlay {
             em.persist(hom);
     }
 
-    void registerJob(String jobName) {
+    public void registerJob(String jobName) {
         Job cj = pickJob(jobName);
         
         if(cj == null){
@@ -145,7 +145,7 @@ public class EntityPlay {
         }
     }
 
-    Job pickJob(String jobName) {
+    public Job pickJob(String jobName) {
         String jpql = "select j from Job j where j.name=:name";
         
         List<Job> jobs = em.createQuery(jpql,Job.class)
@@ -159,7 +159,7 @@ public class EntityPlay {
         }
     }
 
-    void showAllTeam() {
+    public void showAllTeam() {
         String jpql = "select t from Team t";
         List<Team> teamList = em.createQuery(jpql,Team.class)
                 .getResultList();
@@ -170,7 +170,7 @@ public class EntityPlay {
         
     }
 
-    void disassembling(Team t) {
+    public void disassembling(Team t) {
         System.out.printf("\n%s(%d)\n",t.getName(),t.getId().intValue());
                 
         List<Member> members = t.getMembers();
@@ -178,6 +178,12 @@ public class EntityPlay {
         for(Member m:members){
             System.out.printf("\tname:%s\n",m.getName());
         }
+    }
+
+    public void quit_a_club(Member m) {
+        System.out.println("quit a club?");
+        m.setTeam(null);
+        em.persist(m);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.play.jpa.manage;
 
 import com.play.jpa.entity.Hobby;
+import com.play.jpa.entity.HobbyOfMember;
 import com.play.jpa.entity.Job;
 import com.play.jpa.entity.JobOfMember;
 import com.play.jpa.entity.Member;
@@ -55,7 +56,7 @@ public class IntegratedVerification {
     ======>   452:라이온즈
     ======>   502:자이언츠
     */
-    @Test
+    //@Test
     void test_team(){
         int totalCount = ep.totalCount();
         int listSize = ep.list().size();
@@ -70,16 +71,50 @@ public class IntegratedVerification {
         
         ep.disassembling(t);
         
+        //탈퇴 quit a club
+        for(Member m:t.getMembers()){
+            if(m.getName().equals("마광수")){
+                System.out.println("is Here!!!!");
+                //ep.quit_a_club(m);
+            }
+        }
     }
     
     @Test
     void test_member(){
+        
+        /*
+        ep.toBeTeam(ep.pickTeam(402), ep.pickMember("임청하"));
+        ep.toBeTeam(ep.pickTeam(402), ep.pickMember("개나리"));
+        ep.toBeTeam(ep.pickTeam(452), ep.pickMember("마광수"));
+        
         Team t = ep.pickTeam(502);
         
-        Member m = new Member();
-        m.setName("임홍국");
+        String[] candidate = {"김덕수","마광수","개나리","아이우","임청하"};
         
-        ep.addMember(t, m);
+        for(String human:candidate){
+            ep.createMember(human);
+            
+            //if(human.)
+            //ep.toBeTeam(t, ep.pickMember(human));
+            
+        }
+        */
+        
+        //hobby
+        
+        //김덕수
+        Member m = ep.pickMember("김덕수");
+        Hobby h = null;
+        
+        h = ep.pickHobby("맛집");
+        ep.addHobby(m, h);
+        /* *
+        for(HobbyOfMember hom:m.getHobbyOfMembers()){
+            Hobby hh = hom.getHobby();
+            System.out.println(hh.getHobbyName());
+        }
+        /* */
         
     }
     
