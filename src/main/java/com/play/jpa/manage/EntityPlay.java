@@ -3,10 +3,12 @@ package com.play.jpa.manage;
 import com.play.jpa.entity.Hobby;
 import com.play.jpa.entity.HobbyOfMember;
 import com.play.jpa.entity.Job;
+import com.play.jpa.entity.JobOfMember;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
 import jakarta.persistence.EntityManager;
 import java.util.List;
+import org.hibernate.grammars.hql.HqlParser;
 
 public class EntityPlay {
     private final EntityManager em;
@@ -29,6 +31,7 @@ public class EntityPlay {
             t.setName(teamName);
 
             em.persist(t);
+            System.out.println("NEW TEAM!!!");
         }
     }
     
@@ -94,6 +97,14 @@ public class EntityPlay {
         
         return m;
     }
+    public Member pickMember(int id){
+        String jpql = "select m from Member m where m.id = :id";
+        Member m = em.createQuery(jpql,Member.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        
+        return m;
+    }
 
     public void registerHobby(String hobbyName) {
         Hobby isH = pickHobby(hobbyName);
@@ -104,7 +115,15 @@ public class EntityPlay {
             em.persist(h);
         }
     }
-
+    
+    public List<Hobby> listHobby() {
+        String jpql = "select h from Hobby h";
+        List<Hobby> isList = em.createQuery(jpql,Hobby.class)
+                .getResultList();
+               
+        return isList;
+    }
+    
     public Hobby pickHobby(String hobbyName) {
         String jpql = "select h from Hobby h where h.hobbyName = :name";
         List<Hobby> isList = em.createQuery(jpql,Hobby.class)
@@ -119,6 +138,20 @@ public class EntityPlay {
         
     }
 
+    public Hobby pickHobby(int id) {
+        String jpql = "select h from Hobby h where h.id = :id";
+        List<Hobby> isList = em.createQuery(jpql,Hobby.class)
+                .setParameter("id", id)
+                .getResultList();
+        
+        if(isList.isEmpty()){
+            return null;
+        }else{
+            return isList.get(0);
+        }
+        
+    }
+    
     public void addHobby(Member m, Hobby h) {
         for(HobbyOfMember hom : m.getHobbyOfMembers()){
             if(h.getHobbyId().intValue() == hom.getHobby().getHobbyId().intValue())
@@ -134,6 +167,15 @@ public class EntityPlay {
             em.persist(hom);
     }
 
+    public void listJob(){
+        String jpql = "select j from Job j";
+        List<Job> list = em.createQuery(jpql,Job.class)
+                .getResultList();
+        for(Job j:list){
+            System.out.println(j.getId()+": "+j.getName());
+        }
+    }
+    
     public void registerJob(String jobName) {
         Job cj = pickJob(jobName);
         
@@ -150,6 +192,20 @@ public class EntityPlay {
         
         List<Job> jobs = em.createQuery(jpql,Job.class)
                 .setParameter("name", jobName)
+                .getResultList();
+        
+        if(jobs.isEmpty()){
+            return null;
+        }else{
+            return jobs.get(0);
+        }
+    }
+    
+    public Job pickJob(int id) {
+        String jpql = "select j from Job j where j.id=:id";
+        
+        List<Job> jobs = em.createQuery(jpql,Job.class)
+                .setParameter("id", id)
                 .getResultList();
         
         if(jobs.isEmpty()){
@@ -184,6 +240,22 @@ public class EntityPlay {
         System.out.println("quit a club?");
         m.setTeam(null);
         em.persist(m);
+    }
+
+    public void find_a_position(Member m, int jobId) {
+        JobOfMember jom = new JobOfMember();
+        jom.setMember(m);
+        jom.setJob(pickJob(jobId));
+        
+        em.persist(jom);
+        
+    }
+
+    public void getJobs(Member m) {
+        for(JobOfMember j:m.getJobList()){
+            Job job = j.getJob();
+            System.out.println(job.getId() +" :"+job.getName());
+        }
     }
 
 }

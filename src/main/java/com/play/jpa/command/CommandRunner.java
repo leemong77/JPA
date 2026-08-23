@@ -1,11 +1,15 @@
 package com.play.jpa.command;
 
+import com.play.jpa.entity.Hobby;
+import com.play.jpa.entity.HobbyOfMember;
+import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
 import com.play.jpa.manage.EntityPlay;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -24,6 +28,8 @@ public class CommandRunner {
     private static EntityTransaction tx;
     private static EntityPlay ep;
             
+    static Team nowTeam = null;
+    static Member nowMember = null;
     public static void main(String[] args) {
         
         //setting
@@ -65,11 +71,13 @@ public class CommandRunner {
                 dispatch(command, tokens);
                 tx.commit();
             } catch (Exception e) {
+                tx.rollback();
                 System.out.println("[오류] 명령 처리 중 예외 발생: " + e.getMessage());
             }
         }
 
         scanner.close();
+        System.exit(0);
     }
 
     /**
@@ -77,25 +85,70 @@ public class CommandRunner {
      * 지금은 뼈대만 있으므로, 실제 로직은 이후 하나씩 채워넣는다.
      */
     private static void dispatch(String command, String[] tokens) {
+        String param = "";
         switch (command) {
             case "createTeam":
-                String param = argsToString(tokens);
-                ep.showAllTeam();
-                Team t = ep.pickTeam(0);
-                if(t != null){
-                    System.out.println("");
-                }
-                        
-                System.out.println("[미구현] createTeam 명령이 들어왔습니다. 인자: " + argsToString(tokens));
+                createTeam(tokens);
                 break;
 
             case "showTeam":
-                System.out.println("[미구현] showTeam 명령이 들어왔습니다. 인자: " + argsToString(tokens));
+                ep.showAllTeam();
+                break;
+            case "pickTeam":
+                param = argsToString(tokens);
+                nowTeam =ep.pickTeam(Integer.parseInt(param));
+                break;
+            case "nowTeam":
+                System.out.println(nowTeam.getId()+" :"+nowTeam.getName());
+                break;
+            case "getMembers":
+                for(Member m:nowTeam.getMembers()){
+                    System.out.println(m.getId()+" "+m.getName());
+                }
+                break;
+            case "pickMember":
+                param = argsToString(tokens);
+                nowMember =ep.pickMember(Integer.parseInt(param));
+                break;
+            case "nowMember":
+                System.out.println(nowMember.getId()+" :"+nowMember.getName());
                 break;
 
+            case "getHobby":
+                List<HobbyOfMember> hobbyList = nowMember.getHobbyOfMembers();
+                for(HobbyOfMember hom : hobbyList){
+                    Hobby h = hom.getHobby();
+                    System.out.println(h.getHobbyName());
+                }
+                break;
+                
+            case "listHobby":
+                for(Hobby h:ep.listHobby()){
+                    System.out.println(h.getHobbyId()+" :"+h.getHobbyName());
+                }
+                break;
+                
+            case "setHobby":
+                param = argsToString(tokens);
+                Hobby h = ep.pickHobby(Integer.parseInt(param));
+                ep.addHobby(nowMember, h);
+                System.out.println("");
+                break;
+                
+            case "listJob":
+                ep.listJob();
+                break;
+            case "haveJob":
+                param = argsToString(tokens);
+                ep.find_a_position(nowMember,Integer.parseInt(param));
+                break;
+            case "getJobs":
+                ep.getJobs(nowMember);
+                break;
             case "createMember":
                 System.out.println("[미구현] createMember 명령이 들어왔습니다. 인자: " + argsToString(tokens));
                 break;
+               
 
             default:
                 System.out.println("알 수 없는 명령어입니다: " + command + " (help 입력 시 목록 확인)");
@@ -119,5 +172,14 @@ public class CommandRunner {
                   help              - 도움말 출력
                   exit / quit       - 종료
                 """);
+    }
+
+    private static void createTeam(String[] tokens) {
+        String param = argsToString(tokens);
+        System.out.println(param);
+        
+        ep.createTeam(param);
+        
+        
     }
 }
