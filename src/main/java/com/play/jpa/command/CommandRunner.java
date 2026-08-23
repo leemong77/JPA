@@ -9,10 +9,15 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
+ * mvn compile exec:java -Dexec.mainClass="com.play.jpa.command.CommandRunner" -Dexec.args="" -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstdin.encoding=UTF-8
+ * 
  * 커맨드라인에서 사용자 입력을 계속 받아,
  * 입력된 명령어에 따라 적절한 동작을 실행하는 대화형 테스트 도구.
  *
@@ -38,7 +43,7 @@ public class CommandRunner {
         tx =em.getTransaction();
         ep = new EntityPlay(em);
         
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in,"MS949");
 
         System.out.println("=== JPA 테스트 콘솔 ===");
         System.out.println("명령어를 입력하세요. 종료하려면 'exit' 입력.");
@@ -68,6 +73,7 @@ public class CommandRunner {
 
             try {
                 tx.begin();
+                isDescend();
                 dispatch(command, tokens);
                 tx.commit();
             } catch (Exception e) {
@@ -145,20 +151,42 @@ public class CommandRunner {
             case "getJobs":
                 ep.getJobs(nowMember);
                 break;
-            case "createMember":
-                System.out.println("[미구현] createMember 명령이 들어왔습니다. 인자: " + argsToString(tokens));
+            case "quickM":
+                param = argsToString(tokens);
+                int id = Integer.parseInt(param);
+                nowMember = ep.quickLinkMember(id);
+                nowTeam = nowMember.getTeam();
                 break;
-               
-
+            case "showM":
+                ep.showAllMember();
+                break;
+            case "createMember":
+                param = argsToString(tokens);
+                ep.createMember(param);
+                break;
+            case "coronation":
+                ep.coronation(nowMember);
+                break;
+            case "checkEnc":
+                param = argsToString(tokens);
+                EncodingFinder.find(param);
+                break;    
+                
             default:
                 System.out.println("알 수 없는 명령어입니다: " + command + " (help 입력 시 목록 확인)");
         }
     }
 
     private static String argsToString(String[] tokens) {
+        //String validParam = new String(args[0].getBytes("MS949"), "MS949");
         StringBuilder sb = new StringBuilder();
         for (int i = 1; i < tokens.length; i++) {
-            sb.append(tokens[i]).append(" ");
+            try {
+                String validParam = new String(tokens[i].getBytes("MS949"), "MS949");
+                sb.append(validParam).append(" ");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(CommandRunner.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return sb.toString().trim();
     }
@@ -179,7 +207,12 @@ public class CommandRunner {
         System.out.println(param);
         
         ep.createTeam(param);
-        
+    }
+
+    private static void isDescend() {
+        if(nowMember!= null && nowMember.getIsQueen()){
+            System.out.println(ColorSpec.REVERSE + ColorSpec.CYAN + " 여왕님 강림하셨습니다!!! " + ColorSpec.RESET);
+        }
         
     }
 }

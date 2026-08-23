@@ -257,5 +257,36 @@ public class EntityPlay {
             System.out.println(job.getId() +" :"+job.getName());
         }
     }
+    
+    public Member quickLinkMember(int id) {
+        
+        String jpql = "select m from Member m where m.id = :id";
+        Member m = em.createQuery(jpql,Member.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        
+        return m;
+    }
+    
+    public void showAllMember() {
+        String jpql = "select m from Member m ORDER BY m.id";
+        List<Member> list = em.createQuery(jpql,Member.class)
+                .getResultList();
+        
+        for(Member m:list){
+            String teamName = m.getTeam()!=null?m.getTeam().getName():"";
+            
+            System.out.printf("id:%d name:%s company:%s\n "
+                    ,m.getId(),m.getName(),teamName);
+        }
+    }
+
+    public void coronation(Member nowMember) {
+        if("박봉옥".equals(nowMember.getName())){
+            nowMember.setIsQueen(true);
+            em.persist(nowMember);
+        }
+            
+    }
 
 }
