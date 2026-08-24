@@ -27,6 +27,12 @@ public class Member {
     private Boolean isQueen;
 
     public Boolean getIsQueen() {
+        if(isQueen == null){
+            this.setIsQueen(false);
+            
+            isQueen = false;
+        }
+        
         return isQueen;
     }
 
@@ -39,12 +45,15 @@ public class Member {
     private Team team;
 
     public Team getTeam() { return team; }
+    
+    
     public void setTeam(Team team) {
             this.team = team;
             if (team != null) {
                 team.getMembers().add(this);  // 반대쪽 컬렉션도 같이 맞춰줌
         }
     }
+    
     
     // HobbyOfMember 쪽의 "member" 필드가 주인
     @OneToMany(mappedBy = "member")
@@ -79,6 +88,28 @@ public class Member {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    void assignTeam(Team t) {
+        this.team = team;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Member)) return false;
+        Member member = (Member) o;
+        return id != null && id.equals(member.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();  // id 기반이 아니라 클래스 기반 고정값 사용 (JPA 프록시 이슈 회피)
+    }
+    
+     public boolean hasHobby(Hobby hobby) {
+        return hobbyOfMembers.stream()
+            .anyMatch(hom -> hom.getHobby().equals(hobby));
     }
     
 }

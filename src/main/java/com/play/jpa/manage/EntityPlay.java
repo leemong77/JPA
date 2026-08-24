@@ -8,7 +8,6 @@ import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
 import jakarta.persistence.EntityManager;
 import java.util.List;
-import org.hibernate.grammars.hql.HqlParser;
 
 public class EntityPlay {
     private final EntityManager em;
@@ -50,11 +49,22 @@ public class EntityPlay {
         Member m = pickMember(member.getName());
         
         if(m != null){
-            m.setTeam(t);
+            System.out.println("to be team inner!!!");
+            t.addMember(m);
+            //m.setTeam(t);
+            //em.persist(m);
+            //em.persist(t);
+        }
+    }
+    
+    public void toBeTeam(Team t,int memberId){
+        
+        Member m = pickMember(memberId);
+        
+        if(m != null){
+            t.addMember(m);
+            //m.setTeam(t);
             em.persist(m);
-        }else{
-            member.setTeam(t);
-            em.persist(member);
         }
     }
     

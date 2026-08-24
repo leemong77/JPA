@@ -41,4 +41,9 @@ public class Team {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public void addMember(Member m){
+        getMembers().add(m);
+        m.assignTeam(this);
+    }
 }

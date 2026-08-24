@@ -116,6 +116,10 @@ public class CommandRunner {
                 param = argsToString(tokens);
                 nowMember =ep.pickMember(Integer.parseInt(param));
                 break;
+            case "toBeTeam":
+                param = argsToString(tokens);
+                ep.toBeTeam(nowTeam,ep.pickMember(Integer.parseInt(param)));
+                break;
             case "nowMember":
                 System.out.println(nowMember.getId()+" :"+nowMember.getName());
                 break;
@@ -166,6 +170,9 @@ public class CommandRunner {
                 break;
             case "coronation":
                 ep.coronation(nowMember);
+                break;
+            case "quitClub":
+                ep.quit_a_club(nowMember);
                 break;
             case "checkEnc":
                 param = argsToString(tokens);

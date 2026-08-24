@@ -83,6 +83,11 @@ public class IntegratedVerification {
     @Test
     void test_member(){
         
+        //자기_자신과는_항상_같다()
+        Member member = new Member();
+        member.setName("홍길동");
+        assertEquals(member, member);
+        
         /*
         ep.toBeTeam(ep.pickTeam(402), ep.pickMember("임청하"));
         ep.toBeTeam(ep.pickTeam(402), ep.pickMember("개나리"));
@@ -99,7 +104,7 @@ public class IntegratedVerification {
             //ep.toBeTeam(t, ep.pickMember(human));
             
         }
-        */
+        
         
         //hobby
         
