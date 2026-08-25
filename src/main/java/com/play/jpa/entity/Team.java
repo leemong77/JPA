@@ -1,6 +1,7 @@
 package com.play.jpa.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -45,5 +46,24 @@ public class Team {
     public void addMember(Member m){
         getMembers().add(m);
         m.assignTeam(this);
+    }
+    
+    public static Team pick(EntityManager em,int id){
+        
+        String jpql = "select t from Team t where t.id = :id";
+        Team team = em.createQuery(jpql, Team.class)
+                .setParameter("id", id)
+                .getSingleResult();
+                
+        return team;
+    }
+    
+    public static void showAll(EntityManager em){
+        
+        List<Team> list = em.createQuery("select t from Team t",Team.class)
+                .getResultList();
+        
+        list.forEach(t->{System.out.println(t.getId()+" :"+t.getName());});
+                
     }
 }

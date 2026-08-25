@@ -57,10 +57,10 @@ public class Member {
     
     // HobbyOfMember 쪽의 "member" 필드가 주인
     @OneToMany(mappedBy = "member")
-    private List<HobbyOfMember> hobbyOfMembers = new ArrayList<>();
+    private List<HobbyOfMember> hobbyList = new ArrayList<>();
     
-    public List<HobbyOfMember> getHobbyOfMembers() { return hobbyOfMembers; }
-    public void setHobbyOfMembers(List<HobbyOfMember> hobbyOfMembers) { this.hobbyOfMembers = hobbyOfMembers; }
+    public List<HobbyOfMember> getHobbyOfMembers() { return hobbyList; }
+    public void setHobbyOfMembers(List<HobbyOfMember> hobbyOfMembers) { this.hobbyList = hobbyOfMembers; }
     
     @OneToMany(mappedBy = "member")
     private List<JobOfMember> jobList = new ArrayList<>();
@@ -107,9 +107,10 @@ public class Member {
         return getClass().hashCode();  // id 기반이 아니라 클래스 기반 고정값 사용 (JPA 프록시 이슈 회피)
     }
     
-     public boolean hasHobby(Hobby hobby) {
-        return hobbyOfMembers.stream()
+    public boolean hasHobby(Hobby hobby) {
+        return hobbyList.stream()
             .anyMatch(hom -> hom.getHobby().equals(hobby));
     }
+     
     
 }

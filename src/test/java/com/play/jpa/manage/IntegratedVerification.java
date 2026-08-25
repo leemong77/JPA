@@ -88,6 +88,31 @@ public class IntegratedVerification {
         member.setName("홍길동");
         assertEquals(member, member);
         
+        Hobby h = new Hobby();
+        h.setHobbyName("가무");
+        
+        HobbyOfMember hom = new HobbyOfMember();
+        
+        hom.setHobby(h);
+        hom.setMember(member);
+        
+        member.getHobbyOfMembers().add(hom);
+        
+        
+        assertTrue(member.hasHobby(h));
+        
+        
+        // id가 둘 다 null인 신규(비영속) 객체 -> 같은 값이어도 다른 객체로 취급
+        Member member1 = new Member();
+        member1.setName("홍길동");
+        
+        System.out.println(member.getHobbyOfMembers());
+        assertFalse(member1.hasHobby(h));
+        
+        Team.showAll(em);
+        Team t = Team.pick(em, 402);
+        
+        t.getMembers().forEach(m->{System.out.println(m.getId()+":"+m.getName());});
         /*
         ep.toBeTeam(ep.pickTeam(402), ep.pickMember("임청하"));
         ep.toBeTeam(ep.pickTeam(402), ep.pickMember("개나리"));
