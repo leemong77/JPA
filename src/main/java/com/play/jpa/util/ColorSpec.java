@@ -1,4 +1,4 @@
-package com.play.jpa.command;
+package com.play.jpa.util;
 
 public class ColorSpec {
     // 텍스트 색상 기본 코드 [1, 2]
@@ -19,4 +19,5 @@ public class ColorSpec {
     // 배경 색상
     public static final String BG_RED = "\u001B[41m";
     public static final String BG_GREEN = "\u001B[42m";
+    
 }

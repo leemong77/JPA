@@ -1,5 +1,6 @@
 package com.play.jpa.manage;
 
+import com.play.jpa.util.ColorSpec;
 import com.play.jpa.entity.Hobby;
 import com.play.jpa.entity.HobbyOfMember;
 import com.play.jpa.entity.Job;
@@ -286,7 +287,7 @@ public class EntityPlay {
         for(Member m:list){
             String teamName = m.getTeam()!=null?m.getTeam().getName():"";
             
-            System.out.printf("id:%d name:%s company:%s\n "
+            System.out.printf("id:%d name:%s team:%s\n "
                     ,m.getId(),m.getName(),teamName);
         }
     }
@@ -298,5 +299,20 @@ public class EntityPlay {
         }
             
     }
+    
+    public void hasHobby(Member m){
+        List<HobbyOfMember> homList = m.getHobbyOfMembers();
+        
+        if(homList.isEmpty()){
+            System.out.println(ColorSpec.REVERSE+ColorSpec.CYAN +"any Interest? NO"+ColorSpec.RESET);
+            
+        }
+        
+        homList.forEach(hom->{
+            Hobby h = hom.getHobby();
+            System.out.printf("%d:%s\n",h.getHobbyId(),h.getHobbyName());
+        });
+    }
+
 
 }

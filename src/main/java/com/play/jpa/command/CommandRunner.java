@@ -1,5 +1,6 @@
 package com.play.jpa.command;
 
+import com.play.jpa.util.ColorSpec;
 import com.play.jpa.entity.Hobby;
 import com.play.jpa.entity.HobbyOfMember;
 import com.play.jpa.entity.Member;

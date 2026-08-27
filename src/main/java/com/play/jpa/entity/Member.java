@@ -1,5 +1,6 @@
 package com.play.jpa.entity;
 
+import com.play.jpa.util.ColorSpec;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -48,8 +49,8 @@ public class Member {
     
     
     public void setTeam(Team team) {
-            this.team = team;
-            if (team != null) {
+        this.team = team;
+        if (team != null) {
                 team.getMembers().add(this);  // 반대쪽 컬렉션도 같이 맞춰줌
         }
     }
@@ -91,7 +92,7 @@ public class Member {
     }
 
     void assignTeam(Team t) {
-        this.team = team;
+        this.team = t;
     }
     
     @Override
@@ -112,5 +113,23 @@ public class Member {
             .anyMatch(hom -> hom.getHobby().equals(hobby));
     }
      
+    
+    public void showJobList(){
+        jobList.forEach(jom->{
+            Job j = jom.getJob();
+            System.out.println(j.getId()+":"+j.getName());
+        });
+    }
+    
+    public void showHobbyList(){
+        
+        
+        hobbyList.forEach(hom->{
+            Hobby h = hom.getHobby();
+            System.out.println(ColorSpec.CYAN+"\t"+h.getHobbyId()+":"+h.getHobbyName()+ColorSpec.RESET);
+        });
+        
+        
+    }
     
 }

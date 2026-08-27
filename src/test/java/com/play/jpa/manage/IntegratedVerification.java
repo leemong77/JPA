@@ -1,5 +1,6 @@
 package com.play.jpa.manage;
 
+import com.play.jpa.util.ColorSpec;
 import com.play.jpa.entity.Hobby;
 import com.play.jpa.entity.HobbyOfMember;
 import com.play.jpa.entity.Job;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.*;
 
 import java.util.List;
 import java.util.Map;
+import org.checkerframework.checker.units.qual.Prefix;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -56,31 +58,33 @@ public class IntegratedVerification {
     ======>   452:라이온즈
     ======>   502:자이언츠
     */
-    //@Test
+    @Test
     void test_team(){
-        int totalCount = ep.totalCount();
-        int listSize = ep.list().size();
+        //ep.showAllTeam();
+        //ep.showAllMember();
+        List<Hobby> hobbyList = ep.listHobby();
+        hobbyList.forEach(h->{System.out.println(h.getHobbyId()+":"+h.getHobbyName());});
         
-        System.out.println("totalCount:"+totalCount);
-        System.out.println("listSize:"+listSize);
         
-        assertEquals(listSize,totalCount);
-        ep.showAllTeam();
+        Team t = ep.pickTeam(402);
         
-        Team t = ep.pickTeam(502);
+        String hobbyName = "바둑";
+        ep.registerHobby(hobbyName);
         
-        ep.disassembling(t);
+        Member m = ep.pickMember(402);
+        Hobby h = ep.pickHobby(2);
         
-        //탈퇴 quit a club
-        for(Member m:t.getMembers()){
-            if(m.getName().equals("마광수")){
-                System.out.println("is Here!!!!");
-                //ep.quit_a_club(m);
-            }
-        }
+        m.showHobbyList();
+        
+        ep.addHobby(m, h);
+        
+        //t.getMembers().forEach(m->{ m.getHobbyOfMembers()});
+        //ep.disassembling(t);
+        
+        //명확한 미션
     }
     
-    @Test
+    //@Test
     void test_member(){
         
         //자기_자신과는_항상_같다()
@@ -109,8 +113,8 @@ public class IntegratedVerification {
         System.out.println(member.getHobbyOfMembers());
         assertFalse(member1.hasHobby(h));
         
-        Team.showAll(em);
-        Team t = Team.pick(em, 402);
+        ep.showAllTeam();
+        Team t = ep.pickTeam( 402);
         
         t.getMembers().forEach(m->{System.out.println(m.getId()+":"+m.getName());});
         /*
