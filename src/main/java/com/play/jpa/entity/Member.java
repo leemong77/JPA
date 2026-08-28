@@ -25,6 +25,24 @@ public class Member {
     
     private String name;
     
+    private Integer  point;
+
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
+    }
+
+    public List<HobbyOfMember> getHobbyList() {
+        return hobbyList;
+    }
+
+    public void setHobbyList(List<HobbyOfMember> hobbyList) {
+        this.hobbyList = hobbyList;
+    }
+    
     @Column(name = "is_queen")
     private Boolean isQueen;
 
@@ -118,7 +136,7 @@ public class Member {
     public void showJobList(){
         jobList.forEach(jom->{
             Job j = jom.getJob();
-            System.out.println(j.getId()+":"+j.getName());
+            Print.reverse(ColorSpec.PURPLE,+j.getId()+":"+j.getName());
         });
     }
     
@@ -130,6 +148,15 @@ public class Member {
         });
         
         
+    }
+
+    public void earnPoint(int point) {
+        
+        this.point += point;
+    }
+
+    public void usePoint(int point) {
+        this.point -= point;
     }
     
 }

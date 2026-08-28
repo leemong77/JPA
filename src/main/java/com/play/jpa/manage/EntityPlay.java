@@ -335,7 +335,7 @@ public class EntityPlay {
     }
     
     public List<Hobby> getHobbyList(){
-        String jpql = "select j from Job j";
+        String jpql = "select h from Hobby h";
         List<Hobby> list = em.createQuery(jpql,Hobby.class).getResultList();
         return list;
     }
@@ -343,11 +343,27 @@ public class EntityPlay {
     public void work(Member m, Job j){
         List<JobOfMember> list = m.getJobList();
         
-        Optional<JobOfMember> opt = list.stream().filter(jom->jom.getId() == j.getId()).findFirst();
+        Optional<JobOfMember> opt = list.stream().filter(jom->jom.getJob().getId() == j.getId()).findFirst();
         if(opt.isPresent()){
             JobOfMember jom = opt.get();
             
-            //m.earnPoint(jom.getJob().getPoint());
+            m.earnPoint(jom.getJob().getPoint());
+        }else{
+            Print.out("That's not your job.");
+        }
+        
+    }
+
+    void enjoy(Member m, Hobby h) {
+        List<HobbyOfMember> list = m.getHobbyList();
+        
+        Optional<HobbyOfMember> opt = list.stream().filter(jom->jom.getHobby().getHobbyId() == h.getHobbyId()).findFirst();
+        if(opt.isPresent()){
+            HobbyOfMember hom = opt.get();
+            
+            m.usePoint(hom.getHobby().getPoint());
+        }else{
+            Print.out("That's not your Hobby.");
         }
         
     }

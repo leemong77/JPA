@@ -15,6 +15,16 @@ public class Hobby {
 
     @Column(name = "hobby_name", nullable = false)
     private String hobbyName;
+    
+    private Integer point;
+
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
+    }
 
     // HobbyOfMember 쪽의 "hobby" 필드가 주인
     @OneToMany(mappedBy = "hobby")
