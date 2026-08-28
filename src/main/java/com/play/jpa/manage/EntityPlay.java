@@ -7,8 +7,10 @@ import com.play.jpa.entity.Job;
 import com.play.jpa.entity.JobOfMember;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
+import com.play.jpa.util.Print;
 import jakarta.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 public class EntityPlay {
     private final EntityManager em;
@@ -314,5 +316,40 @@ public class EntityPlay {
         });
     }
 
+    public void land_a_job(Member m,Job job){
+        boolean isHave = m.getJobList().stream().anyMatch(jom->jom.getJob() == job);
+        if(!isHave){
+            JobOfMember jom = new JobOfMember();
+            jom.setMember(m);
+            jom.setJob(job);
+
+            em.persist(jom);
+        }
+        
+    }
+    
+    public List<Job> getJobList(){
+        String jpql = "select j from Job j";
+        List<Job> list = em.createQuery(jpql,Job.class).getResultList();
+        return list;
+    }
+    
+    public List<Hobby> getHobbyList(){
+        String jpql = "select j from Job j";
+        List<Hobby> list = em.createQuery(jpql,Hobby.class).getResultList();
+        return list;
+    }
+    
+    public void work(Member m, Job j){
+        List<JobOfMember> list = m.getJobList();
+        
+        Optional<JobOfMember> opt = list.stream().filter(jom->jom.getId() == j.getId()).findFirst();
+        if(opt.isPresent()){
+            JobOfMember jom = opt.get();
+            
+            //m.earnPoint(jom.getJob().getPoint());
+        }
+        
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.play.jpa.entity;
 
 import com.play.jpa.util.ColorSpec;
+import com.play.jpa.util.Print;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -123,10 +124,9 @@ public class Member {
     
     public void showHobbyList(){
         
-        
         hobbyList.forEach(hom->{
             Hobby h = hom.getHobby();
-            System.out.println(ColorSpec.CYAN+"\t"+h.getHobbyId()+":"+h.getHobbyName()+ColorSpec.RESET);
+            Print.reverse(ColorSpec.CYAN,"\t"+h.getHobbyId()+":"+h.getHobbyName());
         });
         
         

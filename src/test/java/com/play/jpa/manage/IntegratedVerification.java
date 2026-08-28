@@ -63,7 +63,6 @@ public class IntegratedVerification {
         //ep.showAllTeam();
         //ep.showAllMember();
         List<Hobby> hobbyList = ep.listHobby();
-        hobbyList.forEach(h->{System.out.println(h.getHobbyId()+":"+h.getHobbyName());});
         
         
         Team t = ep.pickTeam(402);
@@ -74,9 +73,31 @@ public class IntegratedVerification {
         Member m = ep.pickMember(402);
         Hobby h = ep.pickHobby(2);
         
-        m.showHobbyList();
+        Job job = ep.pickJob(7);
         
-        ep.addHobby(m, h);
+        //ep.land_a_job(m,job);
+        List<Job> allJob = ep.getJobList();
+        
+        /* *
+        allJob.forEach(j->{
+            if(j.getName().equals("개발자")) j.setPoint(85);
+            if(j.getName().equals("변호사")) j.setPoint(87);
+            if(j.getName().equals("청소부")) j.setPoint(75);
+            if(j.getName().equals("건설")) j.setPoint(80);
+            if(j.getName().equals("수위")) j.setPoint(69);
+            if(j.getName().equals("과일청과")) j.setPoint(70);
+            if(j.getName().equals("백수")) j.setPoint(34);
+            
+        });
+        /* */
+        m.showHobbyList();
+        m.showJobList();
+        
+        //ep.work(m,job);
+        
+        //ep.addHobby(m, h);
+        //Job j = ep.pickJob("")
+        
         
         //t.getMembers().forEach(m->{ m.getHobbyOfMembers()});
         //ep.disassembling(t);

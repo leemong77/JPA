@@ -17,6 +17,16 @@ public class Job {
     
     private String name;
 
+    private int point;
+    
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
+    }
+    
     public Long getId() {
         return id;
     }
