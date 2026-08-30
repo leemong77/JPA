@@ -84,6 +84,18 @@ public class Member {
     
     @OneToMany(mappedBy = "member")
     private List<JobOfMember> jobList = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "member")
+    private List<Ledger> ledgerList = new ArrayList<>();
+
+    public void setLedgerList(List<Ledger> ledgerList) {
+        this.ledgerList = ledgerList;
+    }
+
+    public List<Ledger> getLedgerList() {
+        return ledgerList;
+    }
+    
 
     public List<JobOfMember> getJobList() {
         return jobList;
@@ -153,6 +165,7 @@ public class Member {
     public void earnPoint(int point) {
         
         this.point += point;
+        
     }
 
     public void usePoint(int point) {

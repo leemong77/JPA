@@ -5,6 +5,7 @@ import com.play.jpa.entity.Hobby;
 import com.play.jpa.entity.HobbyOfMember;
 import com.play.jpa.entity.Job;
 import com.play.jpa.entity.JobOfMember;
+import com.play.jpa.entity.Ledger;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
 import com.play.jpa.util.Print;
@@ -359,9 +360,13 @@ public class EntityPlay {
         
         Optional<HobbyOfMember> opt = list.stream().filter(jom->jom.getHobby().getHobbyId() == h.getHobbyId()).findFirst();
         if(opt.isPresent()){
-            HobbyOfMember hom = opt.get();
+            m.usePoint(h.getPoint());
             
-            m.usePoint(hom.getHobby().getPoint());
+            Ledger ledger = new Ledger();
+            ledger.setMember(m);
+            ledger.setHobby(h);
+            ledger.setPoint(h.getPoint());
+            em.persist(ledger);
         }else{
             Print.out("That's not your Hobby.");
         }

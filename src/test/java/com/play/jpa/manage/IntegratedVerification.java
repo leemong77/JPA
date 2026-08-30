@@ -89,7 +89,7 @@ public class IntegratedVerification {
             if(j.getName().equals("백수")) j.setPoint(34);
             
         });
-        */
+        *
         List<Hobby> allHobby = ep.getHobbyList();
         
         allHobby.forEach(h->{
