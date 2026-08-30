@@ -13,6 +13,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Entity
 @Table(name="member")
@@ -168,8 +170,11 @@ public class Member {
         
     }
 
-    public void usePoint(int point) {
-        this.point -= point;
+    public void usePoint(int point) throws Exception {
+        if(this.point < point){
+            throw new Exception("I am short on points.");
+        }else{
+            this.point -= point;
+        }
     }
-    
 }

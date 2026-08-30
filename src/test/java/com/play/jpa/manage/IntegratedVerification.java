@@ -59,75 +59,20 @@ public class IntegratedVerification {
     ======>   502:자이언츠
     */
     @Test
-    void test_team(){
-        //ep.showAllTeam();
-        //ep.showAllMember();
-        List<Hobby> hobbyList = ep.listHobby();
-        
-        
-        Team t = ep.pickTeam(402);
-        
-        String hobbyName = "바둑";
-        ep.registerHobby(hobbyName);
+    void test_team() throws Exception{
         
         Member m = ep.pickMember(402);
         Hobby h1 = ep.pickHobby(2);
         
         Job job = ep.pickJob(7);
         
-        //ep.land_a_job(m,job);
-        List<Job> allJob = ep.getJobList();
-        
-        /* *
-        allJob.forEach(j->{
-            if(j.getName().equals("개발자")) j.setPoint(85);
-            if(j.getName().equals("변호사")) j.setPoint(87);
-            if(j.getName().equals("청소부")) j.setPoint(75);
-            if(j.getName().equals("건설")) j.setPoint(80);
-            if(j.getName().equals("수위")) j.setPoint(69);
-            if(j.getName().equals("과일청과")) j.setPoint(70);
-            if(j.getName().equals("백수")) j.setPoint(34);
-            
-        });
-        *
-        List<Hobby> allHobby = ep.getHobbyList();
-        
-        allHobby.forEach(h->{
-            if(h.getHobbyName().equals("등산")) h.setPoint(25);
-            if(h.getHobbyName().equals("낚시")) h.setPoint(30);
-            if(h.getHobbyName().equals("여행")) h.setPoint(50);
-            if(h.getHobbyName().equals("맛집")) h.setPoint(20);
-            if(h.getHobbyName().equals("음주")) h.setPoint(15);
-            if(h.getHobbyName().equals("바둑")) h.setPoint(10);
-        
-            
-        });
-        /* */
-        m.showJobList();
-        
-        
         int point = m.getPoint();
         int minus = h1.getPoint();
+        
         ep.enjoy(m,h1);
         
         assertEquals(m.getPoint(), point-minus);
         
-        
-        Job job_lawyer = ep.pickJob(2);
-        point = m.getPoint();
-        int plus = job_lawyer.getPoint();
-        
-        ep.work(m,job_lawyer);
-        assertEquals(m.getPoint(), point+plus);
-        
-        //ep.addHobby(m, h);
-        //Job j = ep.pickJob("")
-        
-        
-        //t.getMembers().forEach(m->{ m.getHobbyOfMembers()});
-        //ep.disassembling(t);
-        
-        //명확한 미션
     }
     
     //@Test

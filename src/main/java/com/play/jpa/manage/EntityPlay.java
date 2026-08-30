@@ -349,13 +349,18 @@ public class EntityPlay {
             JobOfMember jom = opt.get();
             
             m.earnPoint(jom.getJob().getPoint());
+            Ledger ledger = new Ledger();
+            ledger.setMember(m);
+            ledger.setJob(j);
+            ledger.setPoint(j.getPoint());
+            em.persist(ledger);
         }else{
             Print.out("That's not your job.");
         }
         
     }
 
-    void enjoy(Member m, Hobby h) {
+    void enjoy(Member m, Hobby h) throws Exception {
         List<HobbyOfMember> list = m.getHobbyList();
         
         Optional<HobbyOfMember> opt = list.stream().filter(jom->jom.getHobby().getHobbyId() == h.getHobbyId()).findFirst();
