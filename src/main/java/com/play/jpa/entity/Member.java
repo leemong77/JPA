@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -28,7 +29,10 @@ public class Member {
     private String name;
     
     private Integer  point;
-
+    
+    @Version
+    private Long version;
+            
     public int getPoint() {
         return point;
     }
@@ -144,6 +148,11 @@ public class Member {
     public boolean hasHobby(Hobby hobby) {
         return hobbyList.stream()
             .anyMatch(hom -> hom.getHobby().equals(hobby));
+    }
+    
+    public boolean hasJob(Job job) {
+        return jobList.stream()
+            .anyMatch(jom -> jom.getJob().equals(job));
     }
      
     

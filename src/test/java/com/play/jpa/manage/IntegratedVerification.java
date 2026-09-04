@@ -49,7 +49,8 @@ public class IntegratedVerification {
     
     @AfterEach
     void tearDown() {
-        tx.commit();
+        if(tx != null && tx.isActive())
+            tx.commit();
         em.close();
     }
     
@@ -61,17 +62,24 @@ public class IntegratedVerification {
     @Test
     void test_team() throws Exception{
         
-        Member m = ep.pickMember(402);
-        Hobby h1 = ep.pickHobby(2);
+        Member moon = ep.pickMember(402);
+        Hobby fish = ep.pickHobby(2);
         
-        Job job = ep.pickJob(7);
+        //sweeper, lawyer
+        Job lawyer = ep.pickJob(2);
         
-        int point = m.getPoint();
-        int minus = h1.getPoint();
+        assertTrue(moon.hasJob(lawyer));
         
-        ep.enjoy(m,h1);
+        ep.work(moon, lawyer);
         
-        assertEquals(m.getPoint(), point-minus);
+        int point = moon.getPoint();
+        int minus = fish.getPoint();
+        
+        ep.enjoy(moon,fish);
+        
+        assertEquals(moon.getPoint(), point-minus);
+        
+        tx.rollback();
         
     }
     

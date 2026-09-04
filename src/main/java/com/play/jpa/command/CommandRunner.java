@@ -119,7 +119,7 @@ public class CommandRunner {
                 break;
             case "toBeTeam":
                 param = argsToString(tokens);
-                ep.toBeTeam(nowTeam,ep.pickMember(Integer.parseInt(param)));
+                ep.toBeTeam(ep.pickMember(Integer.parseInt(param)),nowTeam);
                 break;
             case "nowMember":
                 System.out.println(nowMember.getId()+" :"+nowMember.getName());

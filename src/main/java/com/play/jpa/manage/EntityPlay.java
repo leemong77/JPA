@@ -48,7 +48,7 @@ public class EntityPlay {
         return team;
     }
     
-    public void toBeTeam(Team t,Member member){
+    public void toBeTeam(Member member, Team t){
         
         Member m = pickMember(member.getName());
         
@@ -57,7 +57,7 @@ public class EntityPlay {
             t.addMember(m);
             //m.setTeam(t);
             //em.persist(m);
-            //em.persist(t);
+            em.persist(t);
         }
     }
     
@@ -349,6 +349,7 @@ public class EntityPlay {
             JobOfMember jom = opt.get();
             
             m.earnPoint(jom.getJob().getPoint());
+            
             Ledger ledger = new Ledger();
             ledger.setMember(m);
             ledger.setJob(j);
