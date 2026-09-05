@@ -7,6 +7,7 @@ import com.play.jpa.entity.Job;
 import com.play.jpa.entity.JobOfMember;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
+import com.play.jpa.util.Print;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -62,24 +63,70 @@ public class IntegratedVerification {
     @Test
     void test_team() throws Exception{
         
-        Member moon = ep.pickMember(402);
-        Hobby fish = ep.pickHobby(2);
         
         //sweeper, lawyer
         Job lawyer = ep.pickJob(2);
+        Job janitor = ep.pickJob("수위");
+        Job whiteHand = ep.pickJob("백수");
+        Job concretePourong = ep.pickJob("건설");
+        Job fruitSaler = ep.pickJob("과일청과");
+       
+        Hobby fish = ep.pickHobby(2);
+        Hobby mountainClimbing = ep.pickHobby(1);
+        Hobby shopping = ep.pickHobby(7);
         
+        //쇼핑 추가 취미에 문수인도 추가
+        //ep.registerHobby("쇼핑",35);
+        
+        Member moon = ep.pickMember(402);
+        ep.addHobby(moon, shopping);
+        
+        //갖고 있는 밥벌이
         assertTrue(moon.hasJob(lawyer));
+        assertTrue(moon.hasJob(janitor));
         
-        ep.work(moon, lawyer);
+        //없는 직업
+        assertFalse(moon.hasJob(concretePourong));
+        assertFalse(moon.hasJob(fruitSaler));
         
-        int point = moon.getPoint();
-        int minus = fish.getPoint();
+        int principal = moon.getPoint();
+        Print.out("principal:" + principal);
         
+        ep.work(moon, whiteHand);
+        
+        int dailyWage = whiteHand.getPoint();
+        
+        ep.enjoy(moon, shopping);
+        ep.enjoy(moon, mountainClimbing);
+        ep.enjoy(moon, fish);
+        
+        int consumedWage = fish.getPoint() 
+                +shopping.getPoint()
+                +mountainClimbing.getPoint()
+                ;
+        
+        int bankStatement = dailyWage - consumedWage;
+        
+        Print.out("principal:" + principal);
+        Print.out("dailyWage:" + dailyWage);
+        Print.out("consumedWage:" + consumedWage);
+        Print.out("bankStatement:" + bankStatement);
+        Print.out("getPoint:" + moon.getPoint());
+        
+        assertEquals(moon.getPoint() , principal+bankStatement);
+        
+        /* *
+        ep.enjoy(moon, shopping);
+        ep.enjoy(moon,mountainClimbing);
         ep.enjoy(moon,fish);
         
+        int minus = fish.getPoint()
+                +mountainClimbing.getPoint()
+                +shopping.getPoint();
+        tx.commit();
         assertEquals(moon.getPoint(), point-minus);
-        
-        tx.rollback();
+        /* */
+        //tx.rollback();
         
     }
     

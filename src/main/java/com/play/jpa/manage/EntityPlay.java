@@ -120,13 +120,16 @@ public class EntityPlay {
         return m;
     }
 
-    public void registerHobby(String hobbyName) {
+    public void registerHobby(String hobbyName , int point) {
         Hobby isH = pickHobby(hobbyName);
         
         if(isH == null){
             Hobby h = new Hobby();
             h.setHobbyName(hobbyName);
+            h.setPoint(point);
             em.persist(h);
+        }else{
+            isH.setPoint(point);
         }
     }
     

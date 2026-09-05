@@ -6,7 +6,7 @@ package com.play.jpa.util;
  */
 public class Print {
     public static void out(String str){
-        System.out.println(ColorSpec.PURPLE+str+ColorSpec.RESET);
+        System.out.println(ColorSpec.CYAN+str+ColorSpec.RESET);
     }
     
     public static void out(String spec,String str){
