@@ -186,4 +186,24 @@ public class Member {
             this.point -= point;
         }
     }
+    
+    public void introduction(){
+        String jobs = "";
+        for(JobOfMember jom :this.jobList){
+            jobs += jom.getJob().getName()+" ";
+        }
+        
+        String hobbies = "";
+        for(HobbyOfMember hom :this.hobbyList){
+            hobbies += hom.getHobby().getHobbyName()+" ";
+        }
+        
+        
+        String selfIntro = "Hi myname is "+getName()+"\n"
+                +"I live seoul korea \n"
+                +"I work a "+jobs+"\n"
+                +"I enjoy "+hobbies;
+        
+        Print.out(selfIntro);
+    }
 }

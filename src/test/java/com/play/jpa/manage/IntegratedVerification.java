@@ -78,6 +78,11 @@ public class IntegratedVerification {
         //쇼핑 추가 취미에 문수인도 추가
         //ep.registerHobby("쇼핑",35);
         
+        Member hongKuk = ep.pickMember("임홍국");
+        
+        //ep.retire(hongKuk, whiteHand);
+        hongKuk.introduction();
+        /* *
         Member moon = ep.pickMember(402);
         ep.addHobby(moon, shopping);
         

@@ -193,13 +193,13 @@ public class EntityPlay {
         }
     }
     
-    public void registerJob(String jobName) {
+    public void registerJob(String jobName,int point) {
         Job cj = pickJob(jobName);
         
         if(cj == null){
             Job j = new Job();
             j.setName(jobName);
-
+            j.setPoint(point);
             em.persist(j);
         }
     }
@@ -380,6 +380,16 @@ public class EntityPlay {
             Print.out("That's not your Hobby.");
         }
         
+    }
+    
+    void retire(Member m,Job j){
+        List<JobOfMember> jobs =  m.getJobList();
+        
+        for(JobOfMember jom : jobs){
+            if(jom.getJob().equals(j) ){
+                em.remove(jom);
+            }
+        }
     }
 
 }
