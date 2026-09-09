@@ -4,6 +4,7 @@
  */
 package com.play.jpa.entity;
 
+import jakarta.persistence.Cacheable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -16,12 +17,17 @@ import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 /**
  *
  * @author window10
  */
 @Entity
 @Table(name="ledger")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ledgerCache")
 public class Ledger extends BaseEntity{
     public Ledger(){}
     

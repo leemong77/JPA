@@ -5,6 +5,7 @@ import com.play.jpa.entity.Hobby;
 import com.play.jpa.entity.HobbyOfMember;
 import com.play.jpa.entity.Job;
 import com.play.jpa.entity.JobOfMember;
+import com.play.jpa.entity.Ledger;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
 import com.play.jpa.util.Print;
@@ -17,10 +18,12 @@ import org.junit.jupiter.api.*;
 import java.util.List;
 import java.util.Map;
 import org.checkerframework.checker.units.qual.Prefix;
+import org.hibernate.stat.Statistics;
 
 import static org.junit.jupiter.api.Assertions.*;
+//mvn test -Dtest=com.play.jpa.manage.IntegratedVerificationmvn test -Dtest=com.play.jpa.manage.IntegratedVerification
+// mvn test -Dtest=com.play.jpa.manage.IntegratedVerificationmvn test -Dtest=com.play.jpa.manage.IntegratedVerification
 
-// mvn test -Dtest=com.play.jpa.manage.IntegratedVerification
 public class IntegratedVerification {
     private static EntityManagerFactory emf;
     private EntityManager em;
@@ -55,6 +58,40 @@ public class IntegratedVerification {
         em.close();
     }
     
+    //@Test
+    void 같은_id로_두번_조회하면_두번째는_캐시에서_가져온다() {
+        
+        // 준비: Ledger 하나 미리 저장해두기 (기존 데이터 활용해도 무방)
+        EntityManager em1 = emf.createEntityManager();
+        EntityTransaction tx1 = em1.getTransaction();
+        tx1.begin();
+
+        Ledger ledger = new Ledger();  // 실제로는 Member/Job 등과 함께 구성하셔야 함
+        em1.persist(ledger);
+        tx1.commit();
+        Long ledgerId = ledger.getId();
+        em1.close();
+
+        // 통계 초기화
+        Statistics stats = emf.unwrap(org.hibernate.SessionFactory.class).getStatistics();
+        stats.clear();
+
+        // 1번째 조회: 서로 다른 EntityManager(=1차 캐시 없음) → DB에서 읽고 2차 캐시에 적재
+        EntityManager em2 = emf.createEntityManager();
+        em2.find(Ledger.class, ledgerId);
+        em2.close();
+
+        // 2번째 조회: 또 다른 EntityManager → 이번엔 2차 캐시에서 읽어야 함
+        EntityManager em3 = emf.createEntityManager();
+        em3.find(Ledger.class, ledgerId);
+        em3.close();
+
+        System.out.println("2차 캐시 히트 수: " + stats.getSecondLevelCacheHitCount());
+        System.out.println("2차 캐시 미스 수: " + stats.getSecondLevelCacheMissCount());
+
+        assertTrue(stats.getSecondLevelCacheHitCount() >= 1);
+    }
+    
     /*
     ======>   402:타이거즈
     ======>   452:라이온즈
@@ -70,19 +107,46 @@ public class IntegratedVerification {
         Job whiteHand = ep.pickJob("백수");
         Job concretePourong = ep.pickJob("건설");
         Job fruitSaler = ep.pickJob("과일청과");
-       
+        Job Prosecutor = ep.pickJob("검사");
+        
         Hobby fish = ep.pickHobby(2);
         Hobby mountainClimbing = ep.pickHobby(1);
         Hobby shopping = ep.pickHobby(7);
+        Hobby drinkingSoJu = ep.pickHobby("음주");
         
         //쇼핑 추가 취미에 문수인도 추가
         //ep.registerHobby("쇼핑",35);
+        //ep.registerJob("검사",45);
         
-        Member hongKuk = ep.pickMember("임홍국");
         
-        //ep.retire(hongKuk, whiteHand);
-        hongKuk.introduction();
+        //Member hongKuk = ep.pickMember("임홍국");
+        //ep.getAJob(hongKuk, Prosecutor);
+        
+        //hongKuk.introduction();
+        
+        //Member queenBee = ep.pickMember("박봉옥");
+        
+        Member moon = ep.pickMember("문수인");
+        ep.showEarning(moon);
+        ep.showEarning(moon);
+        ep.showEarning(moon);
+        ep.showEarning(moon);
+        ep.showEarning(moon);
+        ep.showEarning(moon);
+        
+        //ep.createAccount(queenBee);
+        
         /* *
+        ep.work(hongKuk, fruitSaler);
+        ep.work(hongKuk, whiteHand);
+        ep.work(hongKuk, Prosecutor);
+        //ep.retire(hongKuk, whiteHand);
+        
+        ep.enjoy(hongKuk, drinkingSoJu);
+        ep.enjoy(hongKuk, fish);
+        ep.enjoy(hongKuk, mountainClimbing);
+        ep.enjoy(hongKuk, shopping);
+        
         Member moon = ep.pickMember(402);
         ep.addHobby(moon, shopping);
         
@@ -205,11 +269,12 @@ public class IntegratedVerification {
     
     //@Test
     void test_hobby(){
+        /*
         //hobby 등록
         ep.registerHobby("여행");
         ep.registerHobby("맛집");
         ep.registerHobby("음주");
-        
+        */
     }
     
     //@Test
@@ -226,6 +291,7 @@ public class IntegratedVerification {
     
     //@Test
     void test_job(){
+        /*
         String[] jobNames = {"개발자","변호사","청소부","건설","수위","과일청과","백수"};
         
         for(String jobName:jobNames){
@@ -255,6 +321,6 @@ public class IntegratedVerification {
         
         em.persist(jom);
         
-        
+        */
     }
 }

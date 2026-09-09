@@ -1,0 +1,11 @@
+
+singleServerConfig:
+  address: "redis://127.0.0.1:6379"
+  connectionMinimumIdleSize: 5
+  connectionPoolSize: 10
+  database: 0
+  # 비밀번호가 있다면 아래 주석 해제
+  # password: "your_redis_password"
+
+threads: 4
+nettyThreads: 4

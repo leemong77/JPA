@@ -34,6 +34,13 @@
             <version>5.10.2</version>
             <scope>test</scope>
         </dependency>
+        
+        <!-- Redisson 2차 캐시 연동 (Hibernate 6.0.2+ 대응) -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-hibernate-6</artifactId>
+            <version>3.27.2</version>
+        </dependency>
     </dependencies>
 
     <build>

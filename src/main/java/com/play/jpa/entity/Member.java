@@ -2,20 +2,25 @@ package com.play.jpa.entity;
 
 import com.play.jpa.util.ColorSpec;
 import com.play.jpa.util.Print;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name="member")
@@ -92,6 +97,7 @@ public class Member {
     private List<JobOfMember> jobList = new ArrayList<>();
     
     @OneToMany(mappedBy = "member")
+    //@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ledgerListCache")
     private List<Ledger> ledgerList = new ArrayList<>();
 
     public void setLedgerList(List<Ledger> ledgerList) {
@@ -132,6 +138,18 @@ public class Member {
         this.team = t;
     }
     
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id") 
+    private Account account;
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+     
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

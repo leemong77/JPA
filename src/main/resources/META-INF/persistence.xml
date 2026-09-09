@@ -18,6 +18,15 @@
             <!-- 실행되는 SQL 로그 출력 -->
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="false"/>
+            
+            <!-- ===== 2차 캐시(Redis) 설정 ===== -->
+            <property name="hibernate.cache.use_second_level_cache" value="true"/>
+            <property name="hibernate.cache.region.factory_class" 
+                      value="org.redisson.hibernate.RedissonRegionFactory"/>
+            <property name="hibernate.cache.redisson.config" value="redisson.yaml"/>
+
+            <!-- 캐시 통계를 콘솔/로그로 확인하고 싶을 때 유용 -->
+            <property name="hibernate.generate_statistics" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>

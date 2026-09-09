@@ -1,5 +1,6 @@
 package com.play.jpa.manage;
 
+import com.play.jpa.entity.Account;
 import com.play.jpa.util.ColorSpec;
 import com.play.jpa.entity.Hobby;
 import com.play.jpa.entity.HobbyOfMember;
@@ -9,6 +10,8 @@ import com.play.jpa.entity.Ledger;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
 import com.play.jpa.util.Print;
+import com.play.jpa.util.SecureTokenGenerator;
+import static com.play.jpa.util.SecureTokenGenerator.generateToken;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
@@ -391,5 +394,47 @@ public class EntityPlay {
             }
         }
     }
+    
+    void getAJob(Member m,Job j){
+        List<JobOfMember> jobs =  m.getJobList();
+        for(JobOfMember jom : jobs){
+            if(jom.getJob().equals(j) ){
+                Print.out("you have a this job");
+                return;
+            }
+        }
+        
+        JobOfMember newJob= new JobOfMember();
+        newJob.setJob(j);
+        newJob.setMember(m);
+        
+        em.persist(newJob);
+    }
 
+    void createAccount(Member m) {
+        Account account = m.getAccount();
+        if(account == null){
+            account = new Account();
+            
+            if(m.getIsQueen())
+               account.setRole("ADMIN");
+            else
+                account.setRole("USER");
+            account.setToken(SecureTokenGenerator.generateToken(32));
+            
+            m.setAccount(account);
+            
+            em.persist(m);
+        }
+        
+    }
+    
+    void showEarning(Member m){
+        int point = 0;
+        for(Ledger l:m.getLedgerList()){
+            point += l.getPoint();
+        }
+        
+        Print.out(m.getName()+":"+point);
+    }
 }
