@@ -103,7 +103,7 @@ public class CommandRunner {
                 break;
             case "pickTeam":
                 param = argsToString(tokens);
-                nowTeam =ep.pickTeam(Integer.parseInt(param));
+//                nowTeam =ep.pickTeam(Integer.parseInt(param));
                 break;
             case "nowTeam":
                 System.out.println(nowTeam.getId()+" :"+nowTeam.getName());
@@ -214,7 +214,7 @@ public class CommandRunner {
         String param = argsToString(tokens);
         System.out.println(param);
         
-        ep.createTeam(param);
+        //ep.createTeam(param);
     }
 
     private static void isDescend() {

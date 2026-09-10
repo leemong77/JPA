@@ -23,34 +23,6 @@ public class EntityPlay {
         this.em = em;
     }
     
-    public void createTeam(String teamName){
-        
-        String jpql = "select count(t) from Team t where t.name = :name";
-        Long count = em.createQuery(jpql, Long.class)
-            .setParameter("name", teamName)
-            .getSingleResult();
-        
-        if(count > 0){
-            System.out.println("duplicate teamName!!!");
-        }else{
-            Team t = new Team(); 
-            t.setName(teamName);
-
-            em.persist(t);
-            System.out.println("NEW TEAM!!!");
-        }
-    }
-    
-    public Team pickTeam(int id){
-        String jpql = "select t from Team t where t.id = :id";
-        
-        Team team = em.createQuery(jpql, Team.class)
-                .setParameter("id", id)
-                .getSingleResult();
-                
-        return team;
-    }
-    
     public void toBeTeam(Member member, Team t){
         
         Member m = pickMember(member.getName());
@@ -432,9 +404,26 @@ public class EntityPlay {
     void showEarning(Member m){
         int point = 0;
         for(Ledger l:m.getLedgerList()){
-            point += l.getPoint();
+            Job j = l.getJob();
+            if(j!=null){
+                point += l.getPoint();
+                Print.out(j.getName()+": "+l.getPoint());
+            }
         }
         
-        Print.out(m.getName()+":"+point);
+        Print.out(ColorSpec.YELLOW,m.getName()+":"+point);
+    }
+    
+    void showUsePoint(Member m){
+        int point = 0;
+        for(Ledger l:m.getLedgerList()){
+            Hobby h = l.getHobby();
+            if(h!=null){
+                point += l.getPoint();
+                Print.out(h.getHobbyName()+": "+l.getPoint());
+            }
+        }
+        
+        Print.out(ColorSpec.YELLOW,m.getName()+":"+point);
     }
 }

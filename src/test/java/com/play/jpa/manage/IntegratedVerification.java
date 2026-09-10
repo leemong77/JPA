@@ -1,5 +1,6 @@
 package com.play.jpa.manage;
 
+import com.play.jpa.service.TeamService;
 import com.play.jpa.util.ColorSpec;
 import com.play.jpa.entity.Hobby;
 import com.play.jpa.entity.HobbyOfMember;
@@ -29,7 +30,7 @@ public class IntegratedVerification {
     private EntityManager em;
     private EntityTransaction tx;
     private EntityPlay ep;
-    //private TeamManager tm;
+    private TeamService ts;
     
     @BeforeAll
     static void setUpFactory() {
@@ -49,6 +50,7 @@ public class IntegratedVerification {
         tx = em.getTransaction();
         tx.begin();
         ep = new EntityPlay(em);
+        ts = new TeamService(em);
     }
     
     @AfterEach
@@ -100,6 +102,7 @@ public class IntegratedVerification {
     @Test
     void test_team() throws Exception{
         
+        ts.createTeam("봉스팍");
         
         //sweeper, lawyer
         Job lawyer = ep.pickJob(2);
@@ -126,17 +129,21 @@ public class IntegratedVerification {
         
         //Member queenBee = ep.pickMember("박봉옥");
         
+        /* *
         Member moon = ep.pickMember("문수인");
-        ep.showEarning(moon);
-        ep.showEarning(moon);
-        ep.showEarning(moon);
-        ep.showEarning(moon);
-        ep.showEarning(moon);
-        ep.showEarning(moon);
+        Member hongKuk = ep.pickMember("임홍국");
+        
+        Member anyone = hongKuk;
+        
+        ep.showEarning(anyone);
+        ep.showUsePoint(anyone);
+        
+        Print.out(ColorSpec.PURPLE,moon.getPoint()+"");
+        
         
         //ep.createAccount(queenBee);
         
-        /* *
+        
         ep.work(hongKuk, fruitSaler);
         ep.work(hongKuk, whiteHand);
         ep.work(hongKuk, Prosecutor);
@@ -202,6 +209,7 @@ public class IntegratedVerification {
     //@Test
     void test_member(){
         
+        /*
         //자기_자신과는_항상_같다()
         Member member = new Member();
         member.setName("홍길동");
@@ -232,7 +240,7 @@ public class IntegratedVerification {
         Team t = ep.pickTeam( 402);
         
         t.getMembers().forEach(m->{System.out.println(m.getId()+":"+m.getName());});
-        /*
+        
         ep.toBeTeam(ep.pickTeam(402), ep.pickMember("임청하"));
         ep.toBeTeam(ep.pickTeam(402), ep.pickMember("개나리"));
         ep.toBeTeam(ep.pickTeam(452), ep.pickMember("마광수"));
