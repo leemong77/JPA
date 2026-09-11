@@ -6,7 +6,10 @@ package com.play.jpa.service;
 
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
+import com.play.jpa.util.ColorSpec;
+import com.play.jpa.util.Print;
 import jakarta.persistence.EntityManager;
+import java.util.List;
 
 /**
  *
@@ -17,6 +20,23 @@ public class MemberService {
 
     public MemberService(EntityManager em) {
         this.em = em;
+    }
+    
+    public void createMember(String name){
+        List<Member> existing = em.createQuery(
+                "select m from Member m where m.name=:name ", Member.class)
+                .setParameter("name", name)
+                .getResultList();
+        
+        if(!existing.isEmpty()){
+            Print.out(ColorSpec.RED,"aleady exits!");
+            return;
+        }
+        
+        Member m =new Member();
+        m.setName(name);
+        em.persist(m);
+        Print.out("new Member!!");
     }
     
     public void toBeTeam(Member member, Team t){

@@ -115,11 +115,11 @@ public class CommandRunner {
                 break;
             case "pickMember":
                 param = argsToString(tokens);
-                nowMember =ep.pickMember(Integer.parseInt(param));
+                //nowMember =ep.pickMember(Integer.parseInt(param));
                 break;
             case "toBeTeam":
                 param = argsToString(tokens);
-                ep.toBeTeam(ep.pickMember(Integer.parseInt(param)),nowTeam);
+                //ep.toBeTeam(ep.pickMember(Integer.parseInt(param)),nowTeam);
                 break;
             case "nowMember":
                 System.out.println(nowMember.getId()+" :"+nowMember.getName());

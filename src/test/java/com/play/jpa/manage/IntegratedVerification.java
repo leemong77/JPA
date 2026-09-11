@@ -9,6 +9,7 @@ import com.play.jpa.entity.JobOfMember;
 import com.play.jpa.entity.Ledger;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
+import com.play.jpa.service.MemberService;
 import com.play.jpa.util.Print;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -31,6 +32,7 @@ public class IntegratedVerification {
     private EntityTransaction tx;
     private EntityPlay ep;
     private TeamService ts;
+    private MemberService ms;
     
     @BeforeAll
     static void setUpFactory() {
@@ -51,6 +53,7 @@ public class IntegratedVerification {
         tx.begin();
         ep = new EntityPlay(em);
         ts = new TeamService(em);
+        ms = new MemberService(em);
     }
     
     @AfterEach
@@ -102,7 +105,12 @@ public class IntegratedVerification {
     @Test
     void test_team() throws Exception{
         
-        ts.createTeam("봉스팍");
+        //ts.createTeam("봉스팍");
+        //ts.showTeams();
+        
+        Team tigers = ts.pickTeam(402);
+        
+        tigers.introduce();
         
         //sweeper, lawyer
         Job lawyer = ep.pickJob(2);
@@ -287,7 +295,8 @@ public class IntegratedVerification {
     
     //@Test
     void test_addHobby(){
-        Member m = ep.pickMember("임홍국");
+        
+        Member m = null; //ep.pickMember("임홍국");
         Hobby h = ep.pickHobby("맛집");
         
         ep.addHobby(m,h);

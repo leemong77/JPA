@@ -1,5 +1,7 @@
 package com.play.jpa.entity;
 
+import com.play.jpa.util.ColorSpec;
+import com.play.jpa.util.Print;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.GeneratedValue;
@@ -46,6 +48,18 @@ public class Team {
     public void addMember(Member m){
         getMembers().add(m);
         m.assignTeam(this);
+    }
+    
+    public void introduce(){
+        int totalPoint = 0;
+        Print.out(getName());
+        
+        for(Member m:this.members){
+            Print.out("\t"+m.getName()+": "+m.getPoint());
+            totalPoint += m.getPoint();
+        }
+        
+        Print.out(ColorSpec.UNDERLINE ,"\t"+totalPoint);
     }
    
 }

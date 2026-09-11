@@ -23,22 +23,11 @@ public class EntityPlay {
         this.em = em;
     }
     
-    public void toBeTeam(Member member, Team t){
-        
-        Member m = pickMember(member.getName());
-        
-        if(m != null){
-            System.out.println("to be team inner!!!");
-            t.addMember(m);
-            //m.setTeam(t);
-            //em.persist(m);
-            em.persist(t);
-        }
-    }
+    
     
     public void toBeTeam(Team t,int memberId){
         
-        Member m = pickMember(memberId);
+        Member m = null; //pickMember(memberId);
         
         if(m != null){
             t.addMember(m);
@@ -78,22 +67,7 @@ public class EntityPlay {
         System.out.println("new Member!!");
     }   
     
-    public Member pickMember(String name){
-        String jpql = "select m from Member m where m.name = :name";
-        Member m = em.createQuery(jpql,Member.class)
-                .setParameter("name", name)
-                .getSingleResult();
-        
-        return m;
-    }
-    public Member pickMember(int id){
-        String jpql = "select m from Member m where m.id = :id";
-        Member m = em.createQuery(jpql,Member.class)
-                .setParameter("id", id)
-                .getSingleResult();
-        
-        return m;
-    }
+    
 
     public void registerHobby(String hobbyName , int point) {
         Hobby isH = pickHobby(hobbyName);

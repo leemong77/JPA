@@ -4,10 +4,16 @@
  */
 package com.play.jpa.service;
 
+import jakarta.persistence.EntityManager;
+
 /**
  *
  * @author window10
  */
 public class JobService {
-    
+    private final EntityManager em;
+
+    public JobService(EntityManager em) {
+        this.em = em;
+    }
 }

@@ -6,7 +6,10 @@ package com.play.jpa.service;
 
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
+import com.play.jpa.util.ColorSpec;
+import com.play.jpa.util.Print;
 import jakarta.persistence.EntityManager;
+import java.util.List;
 
 /**
  *
@@ -17,6 +20,21 @@ public class TeamService {
 
     public TeamService(EntityManager em) {
         this.em = em;
+    }
+    
+    public void showTeams(){
+        String jpql = "select t from Team t";
+        List<Team> allTeam = em.createQuery(jpql, Team.class).getResultList();
+        
+        allTeam.forEach(t->{
+            Print.out(t.getName()+"["+t.getId()+"] population - "+t.getMembers().size());
+            
+            int totalPoint = 0;
+            for(Member m:t.getMembers()){
+                totalPoint += m.getPoint();
+            }
+            Print.out(ColorSpec.BG_GREEN,"\tpoint:"+totalPoint);
+        });
     }
     
     public void createTeam(String teamName){
