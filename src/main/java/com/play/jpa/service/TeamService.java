@@ -65,5 +65,12 @@ public class TeamService {
         return team;
     }
     
+    public void addMember(Team t, Member m){
+        
+        t.getMembers().add(m);
+        m.setTeam(t);
+        
+        em.persist(t);
+    }
     
 }

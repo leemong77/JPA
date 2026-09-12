@@ -9,6 +9,7 @@ import com.play.jpa.entity.JobOfMember;
 import com.play.jpa.entity.Ledger;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
+import com.play.jpa.service.JobService;
 import com.play.jpa.service.MemberService;
 import com.play.jpa.util.Print;
 import jakarta.persistence.EntityManager;
@@ -33,6 +34,7 @@ public class IntegratedVerification {
     private EntityPlay ep;
     private TeamService ts;
     private MemberService ms;
+    private JobService js;
     
     @BeforeAll
     static void setUpFactory() {
@@ -54,6 +56,7 @@ public class IntegratedVerification {
         ep = new EntityPlay(em);
         ts = new TeamService(em);
         ms = new MemberService(em);
+        js = new JobService(em);
     }
     
     @AfterEach
@@ -109,8 +112,34 @@ public class IntegratedVerification {
         //ts.showTeams();
         
         Team tigers = ts.pickTeam(402);
-        
         tigers.introduce();
+        
+        Team bigBoss = ts.pickTeam(602);
+        Member bongQ = ms.pickMember(352);
+        
+        ts.addMember(bigBoss, bongQ);
+        
+        Job boss = new Job();
+        boss.setName("BOSS");
+        boss.setPoint(150);
+        
+        Job President = new Job();
+        President.setName("President");
+        President.setPoint(300);
+        
+        Job ChairMan = new Job();
+        ChairMan.setName("ChairMan");
+        ChairMan.setPoint(230);
+        
+        js.generate_jobs(boss);
+        js.generate_jobs(President);
+        js.generate_jobs(ChairMan);
+        
+        
+        js.find_a_job(bongQ, boss);
+        js.find_a_job(bongQ, President);
+        js.find_a_job(bongQ, ChairMan);
+        
         
         //sweeper, lawyer
         Job lawyer = ep.pickJob(2);
