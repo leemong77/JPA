@@ -9,6 +9,7 @@ import com.play.jpa.entity.JobOfMember;
 import com.play.jpa.entity.Ledger;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
+import com.play.jpa.service.HobbyService;
 import com.play.jpa.service.JobService;
 import com.play.jpa.service.MemberService;
 import com.play.jpa.util.Print;
@@ -34,8 +35,8 @@ public class IntegratedVerification {
     private EntityPlay ep;
     private TeamService ts;
     private MemberService ms;
-    private JobService js;
-    
+    private JobService jsvc;
+    private HobbyService hsvc;
     @BeforeAll
     static void setUpFactory() {
         emf = Persistence.createEntityManagerFactory("myPU");
@@ -56,7 +57,8 @@ public class IntegratedVerification {
         ep = new EntityPlay(em);
         ts = new TeamService(em);
         ms = new MemberService(em);
-        js = new JobService(em);
+        jsvc = new JobService(em);
+        hsvc = new HobbyService(em);
     }
     
     @AfterEach
@@ -112,7 +114,7 @@ public class IntegratedVerification {
         //ts.showTeams();
         
         Team tigers = ts.pickTeam(402);
-        tigers.introduce();
+        //tigers.introduce();
         
         Team bigBoss = ts.pickTeam(602);
         Member bongQ = ms.pickMember(352);
@@ -131,16 +133,16 @@ public class IntegratedVerification {
         ChairMan.setName("ChairMan");
         ChairMan.setPoint(230);
         
-        js.generate_jobs(boss);
-        js.generate_jobs(President);
-        js.generate_jobs(ChairMan);
+        jsvc.generate_jobs(boss);
+        jsvc.generate_jobs(President);
+        jsvc.generate_jobs(ChairMan);
         
         
-        js.find_a_job(bongQ, boss);
-        js.find_a_job(bongQ, President);
-        js.find_a_job(bongQ, ChairMan);
+        jsvc.find_a_job(bongQ, boss);
+        jsvc.find_a_job(bongQ, President);
+        jsvc.find_a_job(bongQ, ChairMan);
         
-        
+        hsvc.showHobbies();
         //sweeper, lawyer
         Job lawyer = ep.pickJob(2);
         Job janitor = ep.pickJob("수위");
@@ -149,10 +151,17 @@ public class IntegratedVerification {
         Job fruitSaler = ep.pickJob("과일청과");
         Job Prosecutor = ep.pickJob("검사");
         
+        
+        
         Hobby fish = ep.pickHobby(2);
         Hobby mountainClimbing = ep.pickHobby(1);
         Hobby shopping = ep.pickHobby(7);
         Hobby drinkingSoJu = ep.pickHobby("음주");
+        
+        //jsvc.work(bongQ,boss);
+        //jsvc.work(bongQ,President);
+        //jsvc.work(bongQ,ChairMan);
+        
         
         //쇼핑 추가 취미에 문수인도 추가
         //ep.registerHobby("쇼핑",35);

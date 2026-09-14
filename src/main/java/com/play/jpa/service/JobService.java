@@ -6,8 +6,12 @@ package com.play.jpa.service;
 
 import com.play.jpa.entity.Job;
 import com.play.jpa.entity.JobOfMember;
+import com.play.jpa.entity.Ledger;
 import com.play.jpa.entity.Member;
+import com.play.jpa.util.Print;
 import jakarta.persistence.EntityManager;
+import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -28,7 +32,15 @@ public class JobService {
     }
     
     public void generate_jobs(Job j){
-        em.persist(j);
+        String jpql = "select count(j) from Job j where j.name = :name";
+        Long isExist = em.createQuery(jpql,Long.class)
+                .setParameter("name", j.getName())
+                .getSingleResult();
+        if(isExist > 0){
+            Print.out("This has already been created!");
+        }else{
+            em.persist(j);
+        }
     }
             
     public void find_a_job(Member m,Job j){
@@ -39,5 +51,26 @@ public class JobService {
         
         em.persist(jom);
         
+    }
+
+    public void work(Member m, Job j) {
+        List<JobOfMember> list = m.getJobList();
+        
+        Optional<JobOfMember> opt = list.stream()
+                .filter(jom->jom.getJob().equals(j)).findFirst();
+        
+        if(opt.isPresent()){
+            m.earnPoint(j.getPoint());
+            
+            Ledger l = new Ledger();
+            l.setMember(m);
+            l.setJob(j);
+            l.setPoint(j.getPoint());
+            em.persist(l);
+            
+        }else{
+            Print.out("Thst's not your job");
+        }
+            
     }
 }

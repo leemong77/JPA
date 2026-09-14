@@ -5,6 +5,7 @@
 package com.play.jpa.service;
 
 import com.play.jpa.entity.Hobby;
+import com.play.jpa.util.Print;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 
@@ -38,6 +39,15 @@ public class HobbyService {
                 .getResultList();
                
         return isList;
+    }
+    
+    public void showHobbies(){
+        String jpql = "select h from Hobby h";
+        List<Hobby> isList = em.createQuery(jpql,Hobby.class)
+                .getResultList();
+        isList.forEach(h->{
+            Print.out( h.getHobbyName()+"["+h.getHobbyId()+"]");
+        });
     }
     
     public Hobby pickHobby(String hobbyName) {
