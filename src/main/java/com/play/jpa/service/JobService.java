@@ -37,7 +37,7 @@ public class JobService {
                 .setParameter("name", j.getName())
                 .getSingleResult();
         if(isExist > 0){
-            Print.out("This has already been created!");
+            Print.out("["+j.getName()+"] This has already been created!");
         }else{
             em.persist(j);
         }

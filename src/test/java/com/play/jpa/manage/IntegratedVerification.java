@@ -121,6 +121,7 @@ public class IntegratedVerification {
         
         ts.addMember(bigBoss, bongQ);
         
+        /*
         Job boss = new Job();
         boss.setName("BOSS");
         boss.setPoint(150);
@@ -141,8 +142,9 @@ public class IntegratedVerification {
         jsvc.find_a_job(bongQ, boss);
         jsvc.find_a_job(bongQ, President);
         jsvc.find_a_job(bongQ, ChairMan);
+        */
         
-        hsvc.showHobbies();
+        
         //sweeper, lawyer
         Job lawyer = ep.pickJob(2);
         Job janitor = ep.pickJob("수위");
@@ -151,16 +153,19 @@ public class IntegratedVerification {
         Job fruitSaler = ep.pickJob("과일청과");
         Job Prosecutor = ep.pickJob("검사");
         
-        
+        Job boss = ep.pickJob("BOSS");
+        Job President = ep.pickJob("President");
+        Job ChairMan = ep.pickJob("ChairMan");
         
         Hobby fish = ep.pickHobby(2);
         Hobby mountainClimbing = ep.pickHobby(1);
         Hobby shopping = ep.pickHobby(7);
         Hobby drinkingSoJu = ep.pickHobby("음주");
         
+        hsvc.showHobbies();
         //jsvc.work(bongQ,boss);
         //jsvc.work(bongQ,President);
-        //jsvc.work(bongQ,ChairMan);
+        jsvc.work(bongQ,ChairMan);
         
         
         //쇼핑 추가 취미에 문수인도 추가
