@@ -4,10 +4,13 @@
  */
 package com.play.jpa.entity;
 
+import com.play.jpa.listener.ChronicleListener;
+import com.play.jpa.util.Print;
 import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
+@EntityListeners(ChronicleListener.class)
 @Table(name = "chronicle")
 public class Chronicle extends BaseEntity {
 
@@ -48,6 +51,8 @@ public class Chronicle extends BaseEntity {
     public Team getTeam() { return team; }
     public Member getMember() { return member; }
     public Date getStartDate() { return startDate; }
+    public void setEndDate(Date d) { this.endDate = d; }
     public Date getEndDate() { return endDate; }
     public boolean isOngoing() { return endDate == null; }
+    
 }

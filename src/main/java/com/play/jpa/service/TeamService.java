@@ -99,7 +99,6 @@ public class TeamService {
                 ongoing.close(now);
             }
             
-            
             Print.out(ColorSpec.BG_RED,"remove!!!");
             em.remove(t.getLeader());
             em.flush();
@@ -115,13 +114,13 @@ public class TeamService {
         em.persist(c);
     }
     
-    private Chronicle findOngoingChronicle(Team team) {
-    return em.createQuery(
-            "SELECT c FROM Chronicle c WHERE c.team = :team AND c.endDate IS NULL",
-            Chronicle.class)
-        .setParameter("team", team)
-        .getResultStream()
-        .findFirst()
-        .orElse(null);
-}
+    public Chronicle findOngoingChronicle(Team team) {
+        return em.createQuery(
+                "SELECT c FROM Chronicle c WHERE c.team = :team AND c.endDate IS NULL",
+                Chronicle.class)
+            .setParameter("team", team)
+            .getResultStream()
+            .findFirst()
+            .orElse(null);
+    }
 }

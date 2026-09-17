@@ -4,7 +4,9 @@
  */
 package com.play.jpa.entity;
 
+import com.play.jpa.listener.LeaderListener;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,6 +17,7 @@ import jakarta.persistence.Table;
 import java.util.Date;
 
 @Entity
+@EntityListeners(LeaderListener.class)
 @Table(name = "leader")
 public class Leader {
     public Leader(){}
