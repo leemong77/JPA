@@ -5,12 +5,14 @@
 package com.play.jpa.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Table(name = "leader")
@@ -21,14 +23,15 @@ public class Leader {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="team_id")
     private Team team;
     
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id")
     private Member member;
 
+    
     public Long getId() {
         return id;
     }
@@ -52,6 +55,4 @@ public class Leader {
     public void setMember(Member member) {
         this.member = member;
     }
-    
-    
 }

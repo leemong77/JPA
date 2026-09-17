@@ -97,7 +97,7 @@ public class Member {
     private List<JobOfMember> jobList = new ArrayList<>();
     
     @OneToMany(mappedBy = "member")
-    //@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ledgerListCache")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "ledgerListCache")
     private List<Ledger> ledgerList = new ArrayList<>();
 
     public void setLedgerList(List<Ledger> ledgerList) {

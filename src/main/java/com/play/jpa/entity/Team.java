@@ -4,12 +4,15 @@ import com.play.jpa.util.ColorSpec;
 import com.play.jpa.util.Print;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -28,6 +31,18 @@ public class Team {
     public void setMembers(List<Member> members) { this.members = members; }
     public List<Member> getMembers() { return members; }
     
+    @OneToOne(mappedBy = "team",fetch = FetchType.LAZY)
+    private Leader leader;
+
+    
+    public Leader getLeader() {
+        return leader;
+    }
+
+    public void setLeader(Leader leader) {
+        this.leader = leader;
+    }
+            
     //
     public Long getId() {
         return id;

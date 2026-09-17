@@ -121,6 +121,8 @@ public class IntegratedVerification {
         
         ts.addMember(bigBoss, bongQ);
         
+        ts.elect(bigBoss, bongQ);
+        
         /*
         Job boss = new Job();
         boss.setName("BOSS");
@@ -165,7 +167,7 @@ public class IntegratedVerification {
         hsvc.showHobbies();
         //jsvc.work(bongQ,boss);
         //jsvc.work(bongQ,President);
-        jsvc.work(bongQ,ChairMan);
+        //jsvc.work(bongQ,ChairMan);
         
         
         //쇼핑 추가 취미에 문수인도 추가

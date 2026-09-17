@@ -46,7 +46,7 @@ public class HobbyService {
         List<Hobby> isList = em.createQuery(jpql,Hobby.class)
                 .getResultList();
         isList.forEach(h->{
-            Print.out( h.getHobbyName()+"["+h.getHobbyId()+"]");
+            Print.out( h.getHobbyName()+"["+h.getHobbyId() +"]");
         });
     }
     
