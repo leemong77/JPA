@@ -94,11 +94,12 @@ public class TeamService {
         Leader leader = t.getLeader();
         
         if(leader!= null){
+            /*
             Chronicle ongoing = findOngoingChronicle(t);
             if (ongoing != null) {
                 ongoing.close(now);
             }
-            
+            */
             Print.out(ColorSpec.BG_RED,"remove!!!");
             em.remove(t.getLeader());
             em.flush();
