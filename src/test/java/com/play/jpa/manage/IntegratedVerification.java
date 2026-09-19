@@ -119,9 +119,19 @@ public class IntegratedVerification {
         Team bigBoss = ts.pickTeam(602);
         Member bongQ = ms.pickMember(352);
         
-        ts.addMember(bigBoss, bongQ);
+        //ts.addMember(bigBoss, bongQ);
         
-        ts.elect(bigBoss, bongQ);
+        //ts.elect(bigBoss, bongQ);
+        
+        //타이거즈에는 멤버가 누가 있어
+        
+        for(Member m:tigers.getMembers()){
+            //Print.out(m.getName()+" "+m.getId());
+        }
+        
+        Member BrigitteLin = ms.pickMember(306);
+        ts.elect(bigBoss, BrigitteLin);
+        
         
         /*
         Job boss = new Job();
@@ -164,7 +174,7 @@ public class IntegratedVerification {
         Hobby shopping = ep.pickHobby(7);
         Hobby drinkingSoJu = ep.pickHobby("음주");
         
-        hsvc.showHobbies();
+        //hsvc.showHobbies();
         //jsvc.work(bongQ,boss);
         //jsvc.work(bongQ,President);
         //jsvc.work(bongQ,ChairMan);
