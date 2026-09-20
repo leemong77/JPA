@@ -69,12 +69,35 @@ public class Team {
         int totalPoint = 0;
         Print.out(getName());
         
+        Leader leader = getLeader();
+        if(leader!=null){
+            Print.out(ColorSpec.PURPLE,"leader: "+leader.getMember().getName());
+        }
+        
         for(Member m:this.members){
             Print.out("\t"+m.getName()+": "+m.getPoint());
             totalPoint += m.getPoint();
         }
         
         Print.out(ColorSpec.UNDERLINE ,"\t"+totalPoint);
+    }
+    
+    public void termination(Member m){
+        if(m == null){
+            throw new IllegalArgumentException("추방할 멤버가 없습니다.");
+        }
+        
+        if(!this.members.contains(m)){
+            throw new IllegalArgumentException("현재 팀의 소속이 아닙니다.");
+        }
+        
+        if(this.leader != null && this.leader.getMember().equals(m)){
+            throw new IllegalArgumentException("리더는 강퇴할수 없습니다. 리더를 교체하세요.");
+        }
+        
+        this.members.remove(m);
+        m.leaveTeam();
+        
     }
    
 }

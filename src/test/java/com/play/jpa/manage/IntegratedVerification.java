@@ -113,11 +113,18 @@ public class IntegratedVerification {
         //ts.createTeam("봉스팍");
         //ts.showTeams();
         
+        ts.showTeams();
+        
+        Team bigBoss = ts.pickTeam(602);
+        Team lions = ts.pickTeam(452);
         Team tigers = ts.pickTeam(402);
         //tigers.introduce();
         
-        Team bigBoss = ts.pickTeam(602);
+        
+        
         Member bongQ = ms.pickMember(352);
+        Member BrigitteLin = ms.pickMember(306);
+        Member hongkook = ms.pickMember(102);
         
         //ts.addMember(bigBoss, bongQ);
         
@@ -125,12 +132,9 @@ public class IntegratedVerification {
         
         //타이거즈에는 멤버가 누가 있어
         
-        for(Member m:tigers.getMembers()){
-            //Print.out(m.getName()+" "+m.getId());
-        }
-        
-        Member BrigitteLin = ms.pickMember(306);
-        ts.elect(bigBoss, BrigitteLin);
+        lions.introduce();
+
+        ts.elect(lions, hongkook);
         
         
         /*

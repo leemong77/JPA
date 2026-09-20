@@ -6,6 +6,7 @@ package com.play.jpa.service;
 
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
+import com.play.jpa.persistence.EmUtil;
 import com.play.jpa.util.ColorSpec;
 import com.play.jpa.util.Print;
 import jakarta.persistence.EntityManager;
@@ -16,8 +17,10 @@ import java.util.List;
  * @author window10
  */
 public class MemberService {
-    private final EntityManager em;
-
+    private EntityManager em;
+    
+    public MemberService() {}
+    
     public MemberService(EntityManager em) {
         this.em = em;
     }
@@ -54,20 +57,12 @@ public class MemberService {
     
     public Member pickMember(String name){
         String jpql = "select m from Member m where m.name = :name";
-        Member m = em.createQuery(jpql,Member.class)
-                .setParameter("name", name)
-                .getSingleResult();
-        
-        return m;
+        return EmUtil.queryForObject(jpql, Member.class, "name",name);
     }
     
     public Member pickMember(int id){
         String jpql = "select m from Member m where m.id = :id";
-        Member m = em.createQuery(jpql,Member.class)
-                .setParameter("id", id)
-                .getSingleResult();
-        
-        return m;
+        return EmUtil.queryForObject(jpql, Member.class, "id",id);
     }
     
 }

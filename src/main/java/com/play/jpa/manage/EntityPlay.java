@@ -11,7 +11,6 @@ import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
 import com.play.jpa.util.Print;
 import com.play.jpa.util.SecureTokenGenerator;
-import static com.play.jpa.util.SecureTokenGenerator.generateToken;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
@@ -22,8 +21,6 @@ public class EntityPlay {
     public EntityPlay(EntityManager em) {
         this.em = em;
     }
-    
-    
     
     public void toBeTeam(Team t,int memberId){
         

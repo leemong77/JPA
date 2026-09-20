@@ -96,5 +96,21 @@ public class EmUtil {
             return query.getResultList();
         });
     }
+    
+    public static <T> void persist(T entity){
+        execute(em -> {
+            em.merge(entity);
+            em.persist(entity);
+            return null;
+        });
+    }
+    
+    public static <T> void remove(T entity){
+        execute(em -> {
+            em.merge(entity);
+            em.remove(entity);
+            return null;
+        });
+    }
 }
 

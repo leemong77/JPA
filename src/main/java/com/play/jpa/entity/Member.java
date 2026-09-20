@@ -155,7 +155,7 @@ public class Member {
         if (this == o) return true;
         if (!(o instanceof Member)) return false;
         Member member = (Member) o;
-        return id != null && id.equals(member.id);
+        return getId() != null && getId().equals(member.getId());
     }
 
     @Override
@@ -223,5 +223,9 @@ public class Member {
                 +"I enjoy "+hobbies;
         
         Print.out(selfIntro);
+    }
+
+    void leaveTeam() {
+        this.team = null;
     }
 }
