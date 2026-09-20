@@ -19,22 +19,5 @@ import java.util.Date;
 public class LeaderListener {
     @PrePersist
     public void beforeSave(Leader l) {
-        Print.out("리더삭제 크로니클 업데이트");
-       
-        Team t = l.getTeam();
-        EmUtil.execute(em->{
-            Chronicle c = em.createQuery(
-                "SELECT c FROM Chronicle c WHERE c.team = :team AND c.endDate IS NULL",
-                Chronicle.class)
-            .setParameter("team", t)
-            .getResultStream()
-            .findFirst()
-            .orElse(null);
-            
-            if(c!=null)
-                c.setEndDate(new Date());
-            return null;
-        });
-       
     }
 }

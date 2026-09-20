@@ -7,6 +7,7 @@ package com.play.jpa.service;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
 import com.play.jpa.persistence.EmUtil;
+import com.play.jpa.persistence.QueryUtil;
 import com.play.jpa.util.ColorSpec;
 import com.play.jpa.util.Print;
 import jakarta.persistence.EntityManager;
@@ -17,19 +18,18 @@ import java.util.List;
  * @author window10
  */
 public class MemberService {
-    private EntityManager em;
+    QueryUtil query;
     
     public MemberService() {}
     
     public MemberService(EntityManager em) {
-        this.em = em;
+        query= new QueryUtil(em);
     }
     
     public void createMember(String name){
-        List<Member> existing = em.createQuery(
-                "select m from Member m where m.name=:name ", Member.class)
-                .setParameter("name", name)
-                .getResultList();
+        String jpql = "select m from Member m where m.name=:name";
+        
+        List<Member> existing = query.selectList(jpql, Member.class,"name",name);
         
         if(!existing.isEmpty()){
             Print.out(ColorSpec.RED,"aleady exits!");
@@ -38,7 +38,7 @@ public class MemberService {
         
         Member m =new Member();
         m.setName(name);
-        em.persist(m);
+        query.persist(m);
         Print.out("new Member!!");
     }
     
@@ -51,18 +51,18 @@ public class MemberService {
             t.addMember(m);
             //m.setTeam(t);
             //em.persist(m);
-            em.persist(t);
+            query.persist(t);
         }
     }
     
     public Member pickMember(String name){
         String jpql = "select m from Member m where m.name = :name";
-        return EmUtil.queryForObject(jpql, Member.class, "name",name);
+        return query.selectOne(jpql, Member.class, "name",name);
     }
     
     public Member pickMember(int id){
         String jpql = "select m from Member m where m.id = :id";
-        return EmUtil.queryForObject(jpql, Member.class, "id",id);
+        return query.selectOne(jpql, Member.class, "id",id);
     }
     
 }
