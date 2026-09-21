@@ -17,13 +17,10 @@ import java.util.List;
  *
  * @author window10
  */
-public class MemberService {
-    QueryUtil query;
-    
-    public MemberService() {}
+public class MemberService  extends BaseService{
     
     public MemberService(EntityManager em) {
-        query= new QueryUtil(em);
+       super(em);
     }
     
     public void createMember(String name){

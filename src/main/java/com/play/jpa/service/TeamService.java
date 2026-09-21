@@ -20,11 +20,10 @@ import java.util.List;
  *
  * @author window10
  */
-public class TeamService {
-    QueryUtil query;
-
+public class TeamService extends BaseService{
+    
     public TeamService(EntityManager em) {
-        query = new QueryUtil(em);
+        super(em);
     }
     
     public void showTeams(){
@@ -110,6 +109,7 @@ public class TeamService {
         if(leader!= null){
             
             query.remove(t.getLeader());
+            em.flush();
             Print.out(ColorSpec.BG_RED,"remove!!!");
             
             String jpql = "SELECT c FROM Chronicle c WHERE c.team = :team AND c.endDate IS NULL";

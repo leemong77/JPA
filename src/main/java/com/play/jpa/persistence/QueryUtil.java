@@ -6,12 +6,13 @@ package com.play.jpa.persistence;
 
 import static com.play.jpa.persistence.EmUtil.execute;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import java.util.List;
 import java.util.Map;
 
 public class QueryUtil {
-    static EntityManager em;
+    private final EntityManager em; 
     
     public QueryUtil(EntityManager em){
         this.em = em;
@@ -63,14 +64,49 @@ public class QueryUtil {
     }
     
     //2. 준영속 엔티티를 다시 저장/수정 (반환값 필수사용)
-    public <T> void update(T entity){
-        em.merge(entity);
+    public <T> T update(T entity){
+        return em.merge(entity);
     }
     
     //3. 준영속 엔티티 삭제(merge 후 remove)
     public <T> void remove(T entity){
         T managed = em.merge(entity);
         em.remove(managed);
-        em.flush();
+    }
+    
+    public <T> T findById(Class<T> entityClass, Object id) {
+        return em.find(entityClass, id);
+    }
+    
+    public int bulkUpdate(String jpql, Object... params) {
+        Query query = em.createQuery(jpql);
+        if (params != null) {
+            for (int i = 0; i < params.length; i += 2) {
+                query.setParameter((String) params[i], params[i + 1]);
+            }
+        }
+        return query.executeUpdate();
+    }
+    
+    public <T> List<T> selectPage(String jpql, Class<T> resultClass, int page, int size, Object... params) {
+        TypedQuery<T> query = em.createQuery(jpql, resultClass);
+        if (params != null) {
+            for (int i = 0; i < params.length; i += 2) {
+                query.setParameter((String) params[i], params[i + 1]);
+            }
+        }
+        query.setFirstResult(page * size);
+        query.setMaxResults(size);
+        return query.getResultList();
+    }
+    
+    public long count(String jpql, Object... params) {
+        TypedQuery<Long> query = em.createQuery(jpql, Long.class);
+        if (params != null) {
+            for (int i = 0; i < params.length; i += 2) {
+                query.setParameter((String) params[i], params[i + 1]);
+            }
+        }
+        return query.getSingleResult();
     }
 }

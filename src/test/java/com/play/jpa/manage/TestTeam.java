@@ -33,17 +33,16 @@ public class TestTeam {
         tigers.introduce();
         
         Team JDG = ts.pickTeam(702);
-        
         JDG.setName("JDG");
         
-        ts.createTeam(JDG);
+        //ts.createTeam(JDG);
         
         Member moonSuIn = ms.pickMember("문수인");
         Member brigitteLin = ms.pickMember("임청하");
         
         //ts.addMember(JDG, brigitteLin);
         
-        ts.elect(JDG,brigitteLin);
+        //ts.elect(JDG,brigitteLin);
         
         //ts.elect(tigers,moonSuIn);
         
