@@ -4,6 +4,9 @@
  */
 package com.play.jpa.service;
 
+import com.play.jpa.entity.Job;
+import com.play.jpa.entity.JobOfMember;
+import com.play.jpa.entity.Ledger;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
 import com.play.jpa.persistence.EmUtil;
@@ -12,6 +15,7 @@ import com.play.jpa.util.ColorSpec;
 import com.play.jpa.util.Print;
 import jakarta.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -60,6 +64,28 @@ public class MemberService  extends BaseService{
     public Member pickMember(int id){
         String jpql = "select m from Member m where m.id = :id";
         return query.selectOne(jpql, Member.class, "id",id);
+    }
+    
+    public void work(Member m, Job j){
+        List<JobOfMember> list = m.getJobList();
+        
+        Optional<JobOfMember> opt = list.stream().filter(jom->jom.getJob().getId() == j.getId())
+                .findFirst();
+        if(opt.isPresent()){
+            
+            JobOfMember jom = opt.get();
+            
+            m.earnPoint(jom.getJob().getPoint());
+            
+            Ledger l = new Ledger();
+            l.setMember(m);
+            l.setJob(j);
+            l.setPoint(j.getPoint());
+            query.persist(l);
+            
+        }else{
+            Print.out("That's not your job.");
+        }
     }
     
 }

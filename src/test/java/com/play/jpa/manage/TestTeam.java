@@ -40,6 +40,8 @@ public class TestTeam {
         Member moonSuIn = ms.pickMember("문수인");
         Member brigitteLin = ms.pickMember("임청하");
         
+        
+        brigitteLin.introduction();
         //ts.addMember(JDG, brigitteLin);
         
         //ts.elect(JDG,brigitteLin);
