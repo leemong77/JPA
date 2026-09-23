@@ -42,6 +42,20 @@ public class TestTeam {
         
         
         brigitteLin.introduction();
+        
+        Team giants = ts.pickTeam(502);
+        Member gabDol = ms.pickMember("김갑돌");
+        
+        Team QueenBee = ts.pickTeam(602);
+        
+        
+        ts.addMember(QueenBee, gabDol);
+        
+        //ts.termination(giants,gabDol);
+        
+        
+        //team 으로 멀 할수 있디?
+        //
         //ts.addMember(JDG, brigitteLin);
         
         //ts.elect(JDG,brigitteLin);
