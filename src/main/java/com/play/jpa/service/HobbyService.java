@@ -13,11 +13,10 @@ import java.util.List;
  *
  * @author window10
  */
-public class HobbyService {
-    private final EntityManager em;
+public class HobbyService extends BaseService{
 
     public HobbyService(EntityManager em) {
-        this.em = em;
+        super(em);
     }
     
     public void registerHobby(String hobbyName , int point) {
@@ -27,35 +26,25 @@ public class HobbyService {
             Hobby h = new Hobby();
             h.setHobbyName(hobbyName);
             h.setPoint(point);
-            em.persist(h);
+            query.persist(h);
         }else{
             isH.setPoint(point);
         }
     }
     
      public List<Hobby> listHobby() {
-        String jpql = "select h from Hobby h";
-        List<Hobby> isList = em.createQuery(jpql,Hobby.class)
-                .getResultList();
-               
-        return isList;
+        return query.selectList("select h from Hobby h", Hobby.class);
     }
     
     public void showHobbies(){
-        String jpql = "select h from Hobby h";
-        List<Hobby> isList = em.createQuery(jpql,Hobby.class)
-                .getResultList();
-        isList.forEach(h->{
+        query.selectList("select h from Hobby h", Hobby.class).forEach(h->{
             Print.out( h.getHobbyName()+"["+h.getHobbyId() +"]");
         });
     }
     
     public Hobby pickHobby(String hobbyName) {
         String jpql = "select h from Hobby h where h.hobbyName = :name";
-        List<Hobby> isList = em.createQuery(jpql,Hobby.class)
-                .setParameter("name", hobbyName)
-                .getResultList();
-        
+        List<Hobby> isList = query.selectList(jpql,Hobby.class,"name",hobbyName);
         if(isList.isEmpty()){
             return null;
         }else{
@@ -65,9 +54,7 @@ public class HobbyService {
     }
     public Hobby pickHobby(int id) {
         String jpql = "select h from Hobby h where h.id = :id";
-        List<Hobby> isList = em.createQuery(jpql,Hobby.class)
-                .setParameter("id", id)
-                .getResultList();
+        List<Hobby> isList = query.selectList(jpql,Hobby.class,"id",id);
         
         if(isList.isEmpty()){
             return null;

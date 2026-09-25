@@ -39,6 +39,7 @@ public class MemberService  extends BaseService{
         
         Member m =new Member();
         m.setName(name);
+        m.setPoint(100);
         query.persist(m);
         Print.out("new Member!!");
     }
@@ -66,26 +67,15 @@ public class MemberService  extends BaseService{
         return query.selectOne(jpql, Member.class, "id",id);
     }
     
-    public void work(Member m, Job j){
-        List<JobOfMember> list = m.getJobList();
+    public void showMember(){
+        List<Member> list = query.selectList("select m from Member m", Member.class);
         
-        Optional<JobOfMember> opt = list.stream().filter(jom->jom.getJob().getId() == j.getId())
-                .findFirst();
-        if(opt.isPresent()){
-            
-            JobOfMember jom = opt.get();
-            
-            m.earnPoint(jom.getJob().getPoint());
-            
-            Ledger l = new Ledger();
-            l.setMember(m);
-            l.setJob(j);
-            l.setPoint(j.getPoint());
-            query.persist(l);
-            
-        }else{
-            Print.out("That's not your job.");
-        }
+       for(Member m:list){
+           String teamName = "";
+           if(m.getTeam()!=null)
+               teamName = m.getTeam().getName();
+           Print.out(ColorSpec.GREEN, m.getName()+"["+teamName+"]");
+       }
     }
     
 }
