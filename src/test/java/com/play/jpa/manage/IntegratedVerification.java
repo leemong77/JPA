@@ -136,7 +136,7 @@ public class IntegratedVerification {
 
         ts.elect(lions, hongkook);
         
-        
+        ts.showTeams();
         /*
         Job boss = new Job();
         boss.setName("BOSS");

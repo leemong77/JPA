@@ -4,10 +4,13 @@
  */
 package com.play.jpa.manage;
 
+import com.play.jpa.entity.HobbyOfMember;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
+import com.play.jpa.service.HobbyService;
 import com.play.jpa.service.MemberService;
 import com.play.jpa.service.TeamService;
+import com.play.jpa.util.Print;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -26,6 +29,7 @@ public class TestTeam {
         
         TeamService ts = new TeamService(em);
         MemberService ms = new MemberService(em);
+        HobbyService hs = new HobbyService(em);
         
         ts.showTeams();
         
@@ -50,6 +54,11 @@ public class TestTeam {
         
         
         ts.addMember(QueenBee, gabDol);
+        
+        for(HobbyOfMember hom:gabDol.getHobbyList()){
+            Print.out(hom.getHobby().getHobbyName());
+        }
+        
         
         //ts.termination(giants,gabDol);
         
