@@ -48,6 +48,8 @@ public class TestTeam {
         Member hongIl = ms.pickMember("최홍일");
         Member shl = ms.pickMember("임상현");
         
+        Member shit = ms.pickMember("함재삼");
+        
         //ms.createMember("임상현");
         
         ts.addMember(QueenBee, gabDol);
@@ -56,17 +58,22 @@ public class TestTeam {
             Print.out(hom.getHobby().getHobbyName());
         }
         
-        giants.addMember(shl);
-        ts.elect(giants, shl);
+        Job dayLaborer = new Job();
+        dayLaborer.setName("일용직 노동자");
+        dayLaborer.setPoint(20);
+        //js.generate_jobs(dayLaborer);
+        //giants.addMember(shl);
+        //ts.elect(giants, shl);
         
         Job sweeper = js.pickJob(2);
         Job merchant = js.pickJob(6);
         Job prosecutor = js.pickJob(52);
         Job scv = js.pickJob(4);
         Job lawyer = js.pickJob(2);
+         
         
-        js.find_a_job(hongIl, scv);
-        js.find_a_job(hongIl, merchant);
+        js.find_a_job(shit, dayLaborer);
+        
         
         //lions.addMember(ms.pickMember("함재삼"));
         //lions.addMember(ms.pickMember("함재삼"));
@@ -75,6 +82,8 @@ public class TestTeam {
         ms.showMember();
         
         giants.introduce();
+        
+        ts.addMember(lions, shit);
         //brigitteLin.showJobList();
         
         

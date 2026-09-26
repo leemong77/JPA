@@ -32,7 +32,8 @@ public class JobService extends BaseService{
     
     public void generate_jobs(Job j){
         String jpql = "select count(j) from Job j where j.name = :name";
-        Long isExist = query.count(jpql,Long.class,"name",j.getName());
+        Long isExist = query.count(jpql,"name",j.getName());
+        
         if(isExist > 0){
             Print.out("["+j.getName()+"] This has already been created!");
         }else{
