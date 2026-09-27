@@ -89,4 +89,19 @@ public class JobService extends BaseService{
         }
             
     }
+
+    public void generate_jobs(String jobName, int point) {
+         String jpql = "select count(j) from Job j where j.name = :name";
+        Long isExist = query.count(jpql,"name",jobName);
+        
+        if(isExist > 0){
+            Print.out("["+jobName+"] This has already been created!");
+        }else{
+            Job j = new Job();
+            j.setName(jobName);
+            j.setPoint(point);
+            query.persist(j);
+            Print.out("["+jobName+"] New Job created!!");
+        }
+    }
 }

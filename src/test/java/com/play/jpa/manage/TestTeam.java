@@ -36,31 +36,42 @@ public class TestTeam {
         
         ts.showTeams();
         
+        //team
         Team QueenBee = ts.pickTeam(602);
         Team tigers = ts.pickTeam(402);
         Team JDG = ts.pickTeam(702);
         Team giants = ts.pickTeam(502);
         Team lions = ts.pickTeam(452);
         
+        //team 생성
+        
+        //member
         Member moonSuIn = ms.pickMember("문수인");
         Member brigitteLin = ms.pickMember("임청하");
         Member gabDol = ms.pickMember("김갑돌");
         Member hongIl = ms.pickMember("최홍일");
         Member shl = ms.pickMember("임상현");
-        
         Member shit = ms.pickMember("함재삼");
         
+        //멤버생성
         //ms.createMember("임상현");
         
-        ts.addMember(QueenBee, gabDol);
+        //addMember
+        //ts.addMember(QueenBee, gabDol);
         
         for(HobbyOfMember hom:gabDol.getHobbyList()){
             Print.out(hom.getHobby().getHobbyName());
         }
         
-        Job dayLaborer = new Job();
-        dayLaborer.setName("일용직 노동자");
-        dayLaborer.setPoint(20);
+        //job 등록
+        js.generate_jobs("catButler(고양이집사)",30);
+        js.generate_jobs("DogWalker(댕댕이산책대행자)",25);
+        js.generate_jobs("PandaFluffer(판다사육사)",40);
+        js.generate_jobs("ProBreather(숨쉬기전문)",10);
+        js.generate_jobs("BedTester(침대누워보기)",5);
+        //Job dayLaborer = new Job();
+        //dayLaborer.setName("일용직 노동자");
+        //dayLaborer.setPoint(20);
         //js.generate_jobs(dayLaborer);
         //giants.addMember(shl);
         //ts.elect(giants, shl);
@@ -70,7 +81,7 @@ public class TestTeam {
         Job prosecutor = js.pickJob(52);
         Job scv = js.pickJob(4);
         Job lawyer = js.pickJob(2);
-         
+        Job dayLaborer = js.pickJob(302); 
         
         js.find_a_job(shit, dayLaborer);
         
@@ -82,11 +93,14 @@ public class TestTeam {
         ms.showMember();
         
         giants.introduce();
+        lions.introduce();
         
         ts.addMember(lions, shit);
         //brigitteLin.showJobList();
         
-        
+        /*
+        find_a_job
+        */
         //js.work(hongIl, scv);
         //js.work(hongIl, merchant);
         
