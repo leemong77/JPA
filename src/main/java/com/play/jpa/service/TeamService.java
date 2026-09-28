@@ -15,6 +15,8 @@ import com.play.jpa.util.Print;
 import jakarta.persistence.EntityManager;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -127,4 +129,28 @@ public class TeamService extends BaseService{
         Chronicle c = new Chronicle(t,m,now);
         query.persist(c);
     }
+    
+    // 회비 걷자!
+    public void feeCollect(Team t){
+        Leader l = t.getLeader();
+        Member leader = l.getMember();
+        
+        if(l == null) {
+            Print.out("리더가 없으면 회비를 걷지 못함");
+            return;
+        }
+        
+        for(Member m:t.getMembers() ){
+            try {
+                if(m.getId() != leader.getId()){
+                    m.usePoint(50);
+                    leader.earnPoint(50);
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(TeamService.class.getName()).log(Level.SEVERE, null, ex);
+                return;
+            }
+        }
+    }
+  
 }

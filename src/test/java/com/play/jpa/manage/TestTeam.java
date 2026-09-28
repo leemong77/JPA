@@ -42,8 +42,12 @@ public class TestTeam {
         Team JDG = ts.pickTeam(702);
         Team giants = ts.pickTeam(502);
         Team lions = ts.pickTeam(452);
+        Team blizzard = ts.pickTeam(802);
         
         //team 생성
+        
+        blizzard.setName("블리자드");
+        ts.createTeam(blizzard);
         
         //member
         Member moonSuIn = ms.pickMember("문수인");
@@ -51,57 +55,72 @@ public class TestTeam {
         Member gabDol = ms.pickMember("김갑돌");
         Member hongIl = ms.pickMember("최홍일");
         Member shl = ms.pickMember("임상현");
-        Member shit = ms.pickMember("함재삼");
+        Member duksu= ms.pickMember("김덕수");
+        
+        //라이온즈 멤버들
+        Member HongK = ms.pickMember("임홍국");
+        Member maK = ms.pickMember("마광수");
+        Member assHole = ms.pickMember("함재삼");
+        Member fuckSuin = ms.pickMember("김수인");
+        Member aiu = ms.pickMember("아이우");
+        Member pil = ms.pickMember("임상필");
+        Member chohee = ms.pickMember("김초희");
+        Member jangKookYoung = ms.pickMember("장국영");
+        Member juUnbal = ms.pickMember("주윤발");
+        Member hwanBiHong = ms.pickMember("이연걸");
+        Member forsythias = ms.pickMember("개나리");
         
         //멤버생성
         //ms.createMember("임상현");
         
-        //addMember
-        //ts.addMember(QueenBee, gabDol);
+        //팀 소속
+        //ts.addMember(JDG, jangKookYoung);
         
-        for(HobbyOfMember hom:gabDol.getHobbyList()){
-            Print.out(hom.getHobby().getHobbyName());
-        }
+        //리더 선출
+        ts.elect(blizzard, pil);
+        
         
         //job 등록
-        js.generate_jobs("catButler(고양이집사)",30);
-        js.generate_jobs("DogWalker(댕댕이산책대행자)",25);
-        js.generate_jobs("PandaFluffer(판다사육사)",40);
-        js.generate_jobs("ProBreather(숨쉬기전문)",10);
-        js.generate_jobs("BedTester(침대누워보기)",5);
-        //Job dayLaborer = new Job();
-        //dayLaborer.setName("일용직 노동자");
-        //dayLaborer.setPoint(20);
-        //js.generate_jobs(dayLaborer);
-        //giants.addMember(shl);
-        //ts.elect(giants, shl);
+        js.generate_jobs("actor",35);
         
+        //job 
         Job sweeper = js.pickJob(2);
         Job merchant = js.pickJob(6);
         Job prosecutor = js.pickJob(52);
         Job scv = js.pickJob(4);
         Job lawyer = js.pickJob(2);
         Job dayLaborer = js.pickJob(302); 
+        Job catButler = js.pickJob(352); 
+        Job dogWalker = js.pickJob(353); 
+        Job pandaFluffer = js.pickJob(354); 
+        Job proBreather = js.pickJob(355); 
+        Job bedTester = js.pickJob(356); 
+        Job PooScooper = js.pickJob(402); 
+        Job actor = js.pickJob(452); 
         
-        js.find_a_job(shit, dayLaborer);
-        
-        
-        //lions.addMember(ms.pickMember("함재삼"));
-        //lions.addMember(ms.pickMember("함재삼"));
+        //직업 매칭
+        js.find_a_job(forsythias, sweeper);
+        js.find_a_job(forsythias, catButler);
+        js.find_a_job(forsythias, merchant);
         
         js.showJob();
         ms.showMember();
         
-        giants.introduce();
-        lions.introduce();
-        
-        ts.addMember(lions, shit);
+        //ts.addMember(lions, shit);
         //brigitteLin.showJobList();
         
-        /*
-        find_a_job
-        */
-        //js.work(hongIl, scv);
+        
+        maK.introduction();
+        //work
+        js.work(forsythias, sweeper);
+        js.work(forsythias, catButler);
+        js.work(forsythias, merchant);
+        js.work(maK, lawyer);
+        js.work(maK, bedTester);
+        //js.work(chohee, pandaFluffer);
+        //js.work(chohee, bedTester);
+        //for(int i=0;i<10;i++)
+        //    js.work(assHole, PooScooper);
         //js.work(hongIl, merchant);
         
         //js.work(gabDol, sweeper);
@@ -109,8 +128,14 @@ public class TestTeam {
         
         //ts.elect(JDG, brigitteLin);
         
-        giants.introduce();
-                
+        //giants.introduce();
+        lions.introduce();
+        tigers.introduce();
+        //blizzard.introduce();
+        //JDG.introduce();
+        
+        //ts.feeCollect(lions);
+        //ts.feeCollect(lions);
         //JDG.introduce();
         //QueenBee.introduce();
         //tigers.introduce();
