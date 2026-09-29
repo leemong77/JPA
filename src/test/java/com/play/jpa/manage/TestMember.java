@@ -2,6 +2,7 @@ package com.play.jpa.manage;
 
 import com.play.jpa.entity.Job;
 import com.play.jpa.entity.Member;
+import com.play.jpa.entity.Team;
 import com.play.jpa.service.HobbyService;
 import com.play.jpa.service.JobService;
 import com.play.jpa.service.MemberService;
@@ -31,9 +32,18 @@ public class TestMember {
         
         
         Member jkyong = ms.pickMember(602);
+        Member JuYunBal = ms.pickMember(603);
+        Member LeeYunGul = ms.pickMember(604);
+        
         Job act = js.pickJob(452);
         
         js.work(jkyong, act);
+        js.work(JuYunBal, act);
+        js.work(LeeYunGul, act);
+        
+        
+        Team JDG = jkyong.getTeam();
+        JDG.introduce();
         
         tx.commit();
         em.close();
