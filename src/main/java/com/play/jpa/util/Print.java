@@ -16,4 +16,20 @@ public class Print {
     public static void reverse(String spec,String str){
         System.out.println(ColorSpec.REVERSE+spec+str+ColorSpec.RESET);
     }
+    
+    public static void outB(String str){
+        System.out.println(ColorSpec.BOLD+str+ColorSpec.RESET);
+    }
+    
+    public static void outB(String spec,String str){
+        System.out.println(ColorSpec.BOLD+spec+str+ColorSpec.RESET);
+    }
+    
+    public static void outU(String spec,String str){
+        System.out.println(ColorSpec.UNDERLINE+spec+str+ColorSpec.RESET);
+    }
+    
+    public static void outU(String str){
+        System.out.println(ColorSpec.UNDERLINE+str+ColorSpec.RESET);
+    }
 }
