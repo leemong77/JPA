@@ -6,6 +6,7 @@ package com.play.jpa.service;
 
 import com.play.jpa.entity.Chronicle;
 import com.play.jpa.entity.Leader;
+import com.play.jpa.entity.Ledger;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
 import com.play.jpa.persistence.EmUtil;
@@ -151,6 +152,32 @@ public class TeamService extends BaseService{
                 return;
             }
         }
+    }
+    
+    
+    public void earnings(Team t){
+        int totalPoint = 0;
+        
+        List<Member> squad = t.getMembers();
+        
+        for(Member crew:squad){
+            int privatePoint = 0;
+            
+            List<Ledger> sweats = crew.getLedgerList();
+            
+            for(Ledger l:sweats){
+                if(l.getJob() != null){
+                  privatePoint += l.getPoint();
+                }
+            }
+            
+            Print.outU(ColorSpec.CYAN, crew.getName()+" workPoint: "+privatePoint);
+            
+            totalPoint += privatePoint;
+            
+        }
+        
+        Print.outU(ColorSpec.CYAN, t.getName()+" total workPoint: "+totalPoint);
     }
   
 }

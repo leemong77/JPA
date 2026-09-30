@@ -78,4 +78,8 @@ public class MemberService  extends BaseService{
        }
     }
     
+    public void earnings(Team t){
+        
+    }
+    
 }

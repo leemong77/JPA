@@ -42,8 +42,7 @@ public class TestMember {
         js.work(LeeYunGul, act);
         
         
-        Team JDG = jkyong.getTeam();
-        JDG.introduce();
+        ms.showMember();
         
         tx.commit();
         em.close();

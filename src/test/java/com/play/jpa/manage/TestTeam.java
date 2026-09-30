@@ -44,11 +44,13 @@ public class TestTeam {
         Team lions = ts.pickTeam(452);
         Team blizzard = ts.pickTeam(802);
         
+        ts.earnings(JDG);
         //team 생성
         
-        blizzard.setName("블리자드");
-        ts.createTeam(blizzard);
+        //blizzard.setName("블리자드");
+        //ts.createTeam(blizzard);
         
+        /*
         //member
         Member moonSuIn = ms.pickMember("문수인");
         Member brigitteLin = ms.pickMember("임청하");
@@ -149,7 +151,7 @@ public class TestTeam {
         //ts.elect(JDG,brigitteLin);
         
         //ts.elect(tigers,moonSuIn);
-        
+        */
         
         tx.commit();
         em.close();
