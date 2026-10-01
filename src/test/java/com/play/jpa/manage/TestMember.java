@@ -1,5 +1,6 @@
 package com.play.jpa.manage;
 
+import com.play.jpa.entity.Hobby;
 import com.play.jpa.entity.Job;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
@@ -37,12 +38,20 @@ public class TestMember {
         
         Job act = js.pickJob(452);
         
-        js.work(jkyong, act);
-        js.work(JuYunBal, act);
-        js.work(LeeYunGul, act);
+        hs.showHobbies();
+        
+        Hobby fish = hs.pickHobby(2);
+        
+        ms.getInto(fish, jkyong);
+        hs.enjoyHobby(fish, jkyong);
+        //js.work(jkyong, act);
+        //js.work(JuYunBal, act);
+        //js.work(LeeYunGul, act);
         
         
-        ms.showMember();
+        
+        
+        //ms.showMember();
         
         tx.commit();
         em.close();

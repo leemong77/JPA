@@ -5,6 +5,9 @@
 package com.play.jpa.service;
 
 import com.play.jpa.entity.Hobby;
+import com.play.jpa.entity.HobbyOfMember;
+import com.play.jpa.entity.Ledger;
+import com.play.jpa.entity.Member;
 import com.play.jpa.util.Print;
 import jakarta.persistence.EntityManager;
 import java.util.List;
@@ -52,6 +55,7 @@ public class HobbyService extends BaseService{
         }
         
     }
+    
     public Hobby pickHobby(int id) {
         String jpql = "select h from Hobby h where h.id = :id";
         List<Hobby> isList = query.selectList(jpql,Hobby.class,"id",id);
@@ -62,5 +66,32 @@ public class HobbyService extends BaseService{
             return isList.get(0);
         }
         
+    }
+    
+    public void enjoyHobby(Hobby h, Member m){
+        boolean isHave = false;
+        
+        for(HobbyOfMember hom:m.getHobbyList()){
+            if(hom.getHobby().getHobbyId() == h.getHobbyId()){
+                isHave = true;
+                break;
+            }
+        }
+        
+        if(isHave){
+            try {
+                m.usePoint(h.getPoint());
+
+                Ledger ledger = new Ledger();
+                ledger.setMember(m);
+                ledger.setHobby(h);
+                ledger.setPoint(h.getPoint());
+                em.persist(ledger);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            Print.out("That's not your Hobby.");  
+        }
     }
 }
