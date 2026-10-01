@@ -179,5 +179,30 @@ public class TeamService extends BaseService{
         
         Print.outU(ColorSpec.CYAN, t.getName()+" total workPoint: "+totalPoint);
     }
+    
+    public void consume(Team t){
+        int totalPoint = 0;
+        
+        List<Member> squad = t.getMembers();
+        
+        for(Member crew:squad){
+            int privatePoint = 0;
+            
+            List<Ledger> sweats = crew.getLedgerList();
+            
+            for(Ledger l:sweats){
+                if(l.getHobby() != null){
+                  privatePoint += l.getPoint();
+                }
+            }
+            
+            Print.outU(ColorSpec.CYAN, crew.getName()+" consumePoint: "+privatePoint);
+            
+            totalPoint += privatePoint;
+            
+        }
+        
+        Print.outU(ColorSpec.CYAN, t.getName()+" total consumePoint: "+totalPoint);
+    }
   
 }

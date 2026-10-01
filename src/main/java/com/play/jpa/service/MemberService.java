@@ -4,6 +4,8 @@
  */
 package com.play.jpa.service;
 
+import com.play.jpa.entity.Hobby;
+import com.play.jpa.entity.HobbyOfMember;
 import com.play.jpa.entity.Job;
 import com.play.jpa.entity.JobOfMember;
 import com.play.jpa.entity.Ledger;
@@ -78,8 +80,24 @@ public class MemberService  extends BaseService{
        }
     }
     
-    public void earnings(Team t){
+    public void getInto(Hobby hobby, Member m){
+        
+        for(HobbyOfMember hom:m.getHobbyList()){
+            if(hom.getHobby().getHobbyId() == hobby.getHobbyId()){
+                Print.outB("aleady have this hobby!!");
+                return;
+            }
+        }
+        
+        HobbyOfMember hom = new HobbyOfMember();
+        hom.setHobby(hobby);
+        hom.setMember(m);
+        
+        m.getHobbyList().add(hom);
+        
+        query.persist(m);
         
     }
+    
     
 }

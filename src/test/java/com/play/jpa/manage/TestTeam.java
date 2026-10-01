@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 
 //mvn test -Dtest=com.play.jpa.manage.TestTeam
 public class TestTeam {
+    
     @Test
     void test(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("myPU");
@@ -45,6 +46,9 @@ public class TestTeam {
         Team blizzard = ts.pickTeam(802);
         
         ts.earnings(JDG);
+        ts.consume(JDG);
+        
+        ts.consume(lions);
         //team 생성
         
         //blizzard.setName("블리자드");
