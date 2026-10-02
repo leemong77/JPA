@@ -41,9 +41,13 @@ public class TestMember {
         hs.showHobbies();
         
         Hobby fish = hs.pickHobby(2);
+        Hobby climb = hs.pickHobby(1);
         
-        ms.getInto(fish, jkyong);
-        hs.enjoyHobby(fish, jkyong);
+        ms.getInto(climb, jkyong);
+       
+        hs.enjoyHobby(climb, jkyong);
+        
+        
         //js.work(jkyong, act);
         //js.work(JuYunBal, act);
         //js.work(LeeYunGul, act);

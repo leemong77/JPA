@@ -205,4 +205,19 @@ public class TeamService extends BaseService{
         Print.outU(ColorSpec.CYAN, t.getName()+" total consumePoint: "+totalPoint);
     }
   
+    public void rank(String option){
+        if(option.equals("P")){
+            Print.outU("Population!!");
+            
+            List<Team> teams = getList();
+            
+            //sort print?
+        }
+    }
+    
+    public List<Team> getList(){
+        String jpql = "select t from Team t";
+        
+        return query.selectList(jpql, Team.class);
+    }
 }
