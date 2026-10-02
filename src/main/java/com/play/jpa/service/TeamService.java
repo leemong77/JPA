@@ -205,16 +205,21 @@ public class TeamService extends BaseService{
         Print.outU(ColorSpec.CYAN, t.getName()+" total consumePoint: "+totalPoint);
     }
   
-    public void rank(String option){
-        if(option.equals("P")){
-            Print.outU("Population!!");
-            
-            List<Team> teams = getList();
-            
-            //sort print?
-        }
+     public List<Team> rank(String option) {
+        String jpql = switch (option) {
+            case "P" -> "select t from Team t order by size(t.members) desc, t.id";
+            case "W" -> """
+                        select t from Team t
+                        left join t.members m
+                        group by t
+                        order by coalesce(sum(m.point),0) desc, t.id
+                        """;
+            default -> throw new IllegalArgumentException("지원하지 않는 옵션: " + option);
+        };
+        return query.selectList(jpql, Team.class);
     }
     
+     
     public List<Team> getList(){
         String jpql = "select t from Team t";
         

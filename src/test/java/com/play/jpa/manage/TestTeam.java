@@ -17,6 +17,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 //mvn test -Dtest=com.play.jpa.manage.TestTeam
@@ -49,6 +50,24 @@ public class TestTeam {
         ts.consume(JDG);
         
         ts.consume(lions);
+        
+        List<Team> P_orders = ts.rank("P");
+        
+        for(Team t:P_orders){
+            Print.out(t.getName()+" : "+t.getMembers().size());
+        }
+        
+        List<Team> W_orders = ts.rank("W");
+        
+        for(Team t:W_orders){
+            int totPoint = 0;
+            
+            for(Member m:t.getMembers()){
+                totPoint += m.getPoint();
+            }
+            
+            Print.out(t.getName()+" : "+totPoint);
+        }
         //team 생성
         
         //blizzard.setName("블리자드");
