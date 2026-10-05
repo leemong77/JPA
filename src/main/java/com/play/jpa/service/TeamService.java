@@ -214,6 +214,13 @@ public class TeamService extends BaseService{
                         group by t
                         order by coalesce(sum(m.point),0) desc, t.id
                         """;
+            case "H" -> """
+                        select t from Team t
+                        left join t.members m
+                        left join Ledger l on m.id = l.member.id and l.job.id is null
+                        group by t
+                        order by coalesce(sum(l.point),0) desc, t.id
+                        """;
             default -> throw new IllegalArgumentException("지원하지 않는 옵션: " + option);
         };
         return query.selectList(jpql, Team.class);

@@ -6,6 +6,7 @@ package com.play.jpa.manage;
 
 import com.play.jpa.entity.HobbyOfMember;
 import com.play.jpa.entity.Job;
+import com.play.jpa.entity.Ledger;
 import com.play.jpa.entity.Member;
 import com.play.jpa.entity.Team;
 import com.play.jpa.service.HobbyService;
@@ -58,7 +59,6 @@ public class TestTeam {
         }
         
         List<Team> W_orders = ts.rank("W");
-        
         for(Team t:W_orders){
             int totPoint = 0;
             
@@ -68,6 +68,24 @@ public class TestTeam {
             
             Print.out(t.getName()+" : "+totPoint);
         }
+        Print.outU("--------------------------");
+        List<Team> H_orders = ts.rank("H");
+        for(Team t:H_orders){
+            int totPoint = 0;
+            
+            for(Member m:t.getMembers()){
+                for(Ledger l:m.getLedgerList()){
+                    if(l.getJob() == null)
+                        totPoint += l.getPoint();
+                }
+                
+            }
+            
+            Print.out(t.getName()+" : "+totPoint);
+        }
+        
+        
+        
         //team 생성
         
         //blizzard.setName("블리자드");
