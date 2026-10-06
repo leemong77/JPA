@@ -31,12 +31,9 @@ public class TestHobby {
         
         hs.registerHobby("스타크래프트", 20);
         
-        List<Hobby> hobbies = hs.hiherThen(20);
+        List<Hobby> hobbies = hs.exesizeJPQL("주");
         
-        for(Hobby h:hobbies){
-            Print.outU(h.getHobbyName()+" : "+h.getPoint()+" point");
-        
-        }
+        hobbies.stream().forEach(h->Print.out(h.getHobbyName()));
         
         tx.commit();
         em.close();

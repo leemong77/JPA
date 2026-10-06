@@ -97,6 +97,13 @@ public class HobbyService extends BaseService{
     
     public List<Hobby> hiherThen(int point){
         String jpql = "select h from Hobby h where h.point >= :point";
-        return query.selectList(jpql,Hobby.class,"point",point);
+        return  query.selectList(jpql,Hobby.class,"point",point);
+    }
+    
+    public <T> List<T> exesizeJPQL(String keyword){
+        String jpql = """
+                      select h from Hobby h where h.hobbyName LIKE concat('%',:keyword,'%')
+                      """;
+        return (List<T>)query.selectList(jpql, Hobby.class,"keyword",keyword);
     }
 }
