@@ -68,7 +68,9 @@ public class TestTeam {
             
             Print.out(t.getName()+" : "+totPoint);
         }
+        
         Print.outU("--------------------------");
+        
         List<Team> H_orders = ts.rank("H");
         for(Team t:H_orders){
             int totPoint = 0;

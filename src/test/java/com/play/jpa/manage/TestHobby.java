@@ -4,10 +4,42 @@
  */
 package com.play.jpa.manage;
 
-/**
- *
- * @author window10
- */
+import com.play.jpa.entity.Hobby;
+import com.play.jpa.service.HobbyService;
+import com.play.jpa.util.Print;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
+import java.util.List;
+import org.junit.jupiter.api.Test;
+
+//mvn test -Dtest=com.play.jpa.manage.TestHobby
 public class TestHobby {
-    
+
+    @Test
+    public void hobby(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("myPU");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        
+        tx.begin();
+        
+        HobbyService hs = new HobbyService(em);
+        
+        hs.showHobbies();
+        
+        hs.registerHobby("스타크래프트", 20);
+        
+        List<Hobby> hobbies = hs.hiherThen(20);
+        
+        for(Hobby h:hobbies){
+            Print.outU(h.getHobbyName()+" : "+h.getPoint()+" point");
+        
+        }
+        
+        tx.commit();
+        em.close();
+        emf.close();
+    }
 }

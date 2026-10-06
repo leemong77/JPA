@@ -31,7 +31,7 @@ public class HobbyService extends BaseService{
             h.setPoint(point);
             query.persist(h);
         }else{
-            isH.setPoint(point);
+            Print.out("aleady register "+hobbyName);
         }
     }
     
@@ -41,7 +41,7 @@ public class HobbyService extends BaseService{
     
     public void showHobbies(){
         query.selectList("select h from Hobby h", Hobby.class).forEach(h->{
-            Print.out( h.getHobbyName()+"["+h.getHobbyId() +"]");
+            Print.out( h.getHobbyName()+"["+h.getHobbyId() +"] ["+h.getPoint()+"]");
         });
     }
     
@@ -93,5 +93,10 @@ public class HobbyService extends BaseService{
         }else{
             Print.out("That's not your Hobby.");  
         }
+    }
+    
+    public List<Hobby> hiherThen(int point){
+        String jpql = "select h from Hobby h where h.point >= :point";
+        return query.selectList(jpql,Hobby.class,"point",point);
     }
 }

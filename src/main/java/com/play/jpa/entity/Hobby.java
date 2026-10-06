@@ -26,10 +26,6 @@ public class Hobby {
         this.point = point;
     }
 
-    // HobbyOfMember 쪽의 "hobby" 필드가 주인
-    @OneToMany(mappedBy = "hobby")
-    private List<HobbyOfMember> hobbyOfMembers = new ArrayList<>();
-
     public Hobby() {}
 
     public Hobby(String hobbyName) {
