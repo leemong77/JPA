@@ -6,6 +6,7 @@ package com.play.jpa.manage;
 
 import com.play.jpa.entity.Hobby;
 import com.play.jpa.service.HobbyService;
+import com.play.jpa.service.MemberService;
 import com.play.jpa.util.Print;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -26,6 +27,7 @@ public class TestHobby {
         tx.begin();
         
         HobbyService hs = new HobbyService(em);
+        MemberService ms = new MemberService(em);
         
         hs.showHobbies();
         
@@ -34,6 +36,8 @@ public class TestHobby {
         List<Hobby> hobbies = hs.exesizeJPQL("주");
         
         hobbies.stream().forEach(h->Print.out(h.getHobbyName()));
+        
+        Member hong = ms.pickMember("임홍국");
         
         tx.commit();
         em.close();

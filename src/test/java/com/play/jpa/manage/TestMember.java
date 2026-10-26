@@ -38,19 +38,25 @@ public class TestMember {
         
         Job act = js.pickJob(452);
         
-        hs.showHobbies();
+        //hs.showHobbies();
+        
         
         Hobby fish = hs.pickHobby(2);
         Hobby climb = hs.pickHobby(1);
+        Hobby food = hs.pickHobby(4);
         
         ms.getInto(climb, jkyong);
+        ms.getInto(food, JuYunBal);
+        ms.getInto(food, LeeYunGul);
+        
        
         hs.enjoyHobby(climb, jkyong);
+        hs.enjoyHobby(food, JuYunBal);
+        hs.enjoyHobby(food, LeeYunGul);
         
-        
-        //js.work(jkyong, act);
-        //js.work(JuYunBal, act);
-        //js.work(LeeYunGul, act);
+        js.work(jkyong, act);
+        js.work(JuYunBal, act);
+        js.work(LeeYunGul, act);
         
         
         

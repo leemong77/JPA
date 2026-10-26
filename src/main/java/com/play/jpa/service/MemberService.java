@@ -82,9 +82,9 @@ public class MemberService  extends BaseService{
     
     public void getInto(Hobby hobby, Member m){
         
-        for(HobbyOfMember hom:m.getHobbyList()){
+        for(HobbyOfMember hom: m.getHobbyList()){
             if(hom.getHobby().getHobbyId() == hobby.getHobbyId()){
-                Print.outB("aleady have this hobby!!");
+                Print.outB(ColorSpec.BG_GREEN,"aleady have this hobby!!");
                 return;
             }
         }
@@ -93,9 +93,7 @@ public class MemberService  extends BaseService{
         hom.setHobby(hobby);
         hom.setMember(m);
         
-        m.getHobbyList().add(hom);
-        
-        query.persist(m);
+        query.persist(hom);
         
     }
     

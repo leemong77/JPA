@@ -106,4 +106,6 @@ public class HobbyService extends BaseService{
                       """;
         return (List<T>)query.selectList(jpql, Hobby.class,"keyword",keyword);
     }
+    
+    
 }

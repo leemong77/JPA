@@ -39,8 +39,5 @@ public class HobbyOfMember extends BaseEntity {
     public Hobby getHobby() { return hobby; }
     public void setHobby(Hobby hobby) {
         this.hobby = hobby;
-        if (hobby != null) {
-            hobby.getHobbyOfMembers().add(this);
-        }
     }
 }
