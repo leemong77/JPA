@@ -5,6 +5,7 @@
 package com.play.jpa.manage;
 
 import com.play.jpa.entity.Hobby;
+import com.play.jpa.entity.Member;
 import com.play.jpa.service.HobbyService;
 import com.play.jpa.service.MemberService;
 import com.play.jpa.util.Print;
@@ -38,6 +39,8 @@ public class TestHobby {
         hobbies.stream().forEach(h->Print.out(h.getHobbyName()));
         
         Member hong = ms.pickMember("임홍국");
+        
+        
         
         tx.commit();
         em.close();

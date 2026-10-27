@@ -8,8 +8,10 @@ import com.play.jpa.entity.Hobby;
 import com.play.jpa.entity.HobbyOfMember;
 import com.play.jpa.entity.Ledger;
 import com.play.jpa.entity.Member;
+import com.play.jpa.util.ColorSpec;
 import com.play.jpa.util.Print;
 import jakarta.persistence.EntityManager;
+import java.awt.color.ColorSpace;
 import java.util.List;
 
 /**
@@ -108,4 +110,24 @@ public class HobbyService extends BaseService{
     }
     
     
+    //멤버 하비 등록
+    public void takeUpHobby(Member m, Hobby h){
+        
+        for(HobbyOfMember hom:m.getHobbyList()){
+            if(hom.getHobby().getHobbyId() == h.getHobbyId()){
+                Print.out(ColorSpec.PURPLE, "has that Hobby!!");
+                return;
+            }
+        }
+        
+        HobbyOfMember hom = new HobbyOfMember();
+        hom.setMember(m);
+        hom.setHobby(h);
+        
+        query.persist(hom);
+        
+    }
+    
+    //멤버 하비 폐기
+    //rank 시리즈
 }
